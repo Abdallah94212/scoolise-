@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframes basse fidélité — Predict</title>
+<link rel="stylesheet" href="../wireframe.css">
+</head>
+<body>
+<h1>WIREFRAME — Predict (candidat) — v0 semaine 2</h1>
+<p class="intro">Version basse fidélité, produite en semaine 2 pour valider la structure et l'enchaînement des écrans avant application de la charte graphique (voir version haute-fidélité en semaine 3, <a href="../../prototype-hifi/predict/index.html">ici</a>).</p>
+
+<div class="flow">
+
+  <div class="screen">
+    <div class="screen-label">01 — Accueil Predict</div>
+    <div class="screen-body">
+      <div class="wf-nav"><span>Accueil</span><span>Profil</span><span>Recherche</span><span>Comparateur</span></div>
+      <div class="wf-bar w80" style="height:24px;"></div>
+      <div class="wf-bar w60"></div>
+      <div class="wf-btn">[ Importer mon bulletin ]</div>
+      <div class="wf-box"></div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">02 — Import bulletin</div>
+    <div class="screen-body">
+      <div class="wf-bar w40"></div>
+      <div class="wf-box" style="border-style:dashed; display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:#777;">zone glisser-déposer</div>
+      <div class="wf-btn">[ Utiliser un exemple ]</div>
+      <div class="wf-bar w60"></div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">03 — Mon profil</div>
+    <div class="screen-body">
+      <div class="wf-bar w60"></div>
+      <div class="wf-box"></div>
+      <div class="wf-box"></div>
+      <div class="wf-btn">[ Voir mes formations ]</div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">04 — Résultats recherche</div>
+    <div class="screen-body">
+      <div class="wf-nav"><span>filtres</span></div>
+      <div style="display:flex; gap:0.4rem;">
+        <div class="wf-circle">82%</div>
+        <div class="wf-box" style="min-height:20px;"></div>
+      </div>
+      <div style="display:flex; gap:0.4rem;">
+        <div class="wf-circle">58%</div>
+        <div class="wf-box" style="min-height:20px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">05 — Fiche formation / score</div>
+    <div class="screen-body">
+      <div class="wf-bar w80"></div>
+      <div class="wf-circle" style="align-self:flex-start; width:64px; height:64px;">82%</div>
+      <div class="wf-box"></div>
+      <div class="wf-box"></div>
+      <div class="wf-btn">[ Ajouter au comparateur ]</div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">06 — Comparateur</div>
+    <div class="screen-body">
+      <div class="wf-nav"><span>Form. A</span><span>Form. B</span><span>Form. C</span></div>
+      <div class="wf-box"></div>
+      <div class="wf-box"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <strong>Légende :</strong> barres grises = texte/titres · rectangles pointillés = zones de contenu/formulaire · cercles = jauge de score · boutons gris = actions principales.<br>
+  <strong>Enchaînement validé avec les personas :</strong> Accueil → Import → Profil → Résultats → Fiche formation (moment de vérité principal) → Comparateur.
+</div>
+
+<a class="back" href="../../../01-recherche-ux/personas/parcours-utilisateurs.md">← Voir les parcours utilisateurs correspondants</a>
+</body>
+</html>

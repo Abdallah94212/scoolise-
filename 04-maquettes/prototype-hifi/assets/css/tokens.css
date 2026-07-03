@@ -1,0 +1,66 @@
+:root {
+  /* Neutres */
+  --ink-900: #0F172A;
+  --ink-700: #334155;
+  --ink-500: #64748B;
+  --surface-0: #F8FAFC;
+  --surface-1: #FFFFFF;
+  --border-1: #E2E8F0;
+
+  /* Sémantique */
+  --success: #16A34A;
+  --success-bg: #DCFCE7;
+  --warning: #D97706;
+  --warning-bg: #FEF3C7;
+  --danger: #DC2626;
+  --danger-bg: #FEE2E2;
+  --info: #0369A1;
+  --info-bg: #E0F2FE;
+
+  /* Accent Prepare */
+  --prepare-600: #0F3D91;
+  --prepare-700: #0B2E6E;
+  --prepare-100: #DCE6F7;
+
+  /* Accent Predict */
+  --predict-600: #0D9488;
+  --predict-700: #0B7A70;
+  --predict-100: #D8F2EE;
+  --predict-amber: #F59E0B;
+
+  /* Typo */
+  --font-heading: 'Lexend', 'Source Sans 3', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+  /* Échelle */
+  --step-1: 0.875rem;
+  --step-2: 1rem;
+  --step-3: 1.125rem;
+  --step-4: 1.5rem;
+  --step-5: 2rem;
+  --step-6: 2.5rem;
+
+  /* Radius / shadow */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.04);
+  --shadow-2: 0 4px 12px rgba(15, 23, 42, 0.08);
+
+  /* Thème actif par défaut (surchargé par .theme-prepare / .theme-predict) */
+  --accent-600: var(--prepare-600);
+  --accent-700: var(--prepare-700);
+  --accent-100: var(--prepare-100);
+}
+
+body.theme-prepare {
+  --accent-600: var(--prepare-600);
+  --accent-700: var(--prepare-700);
+  --accent-100: var(--prepare-100);
+}
+
+body.theme-predict {
+  --accent-600: var(--predict-600);
+  --accent-700: var(--predict-700);
+  --accent-100: var(--predict-100);
+}

@@ -1,0 +1,47 @@
+/* Style volontairement "basse fidélité" : niveaux de gris, pas de couleur de marque,
+   pas de typographie soignée — objectif : valider la structure et les priorités
+   avant d'investir dans le détail visuel (charte graphique appliquée en semaine 3). */
+* { box-sizing: border-box; }
+body {
+  font-family: 'Courier New', monospace;
+  background: #EDEDED;
+  color: #333;
+  margin: 0;
+  padding: 2rem;
+}
+h1 { font-size: 1.4rem; }
+.intro { max-width: 70ch; color: #555; font-family: Arial, sans-serif; }
+.flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.screen {
+  background: #fff;
+  border: 2px solid #999;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.screen-label {
+  font-family: Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background: #333;
+  color: #fff;
+  padding: 0.35rem 0.6rem;
+}
+.screen-body { padding: 0.6rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+.wf-bar { background: #CCC; height: 14px; border: 1px dashed #999; }
+.wf-bar.w60 { width: 60%; }
+.wf-bar.w40 { width: 40%; }
+.wf-bar.w80 { width: 80%; }
+.wf-box { background: #F5F5F5; border: 1px dashed #999; flex: 1; min-height: 40px; }
+.wf-nav { display: flex; gap: 0.3rem; margin-bottom: 0.4rem; }
+.wf-nav span { background: #DDD; border: 1px dashed #999; padding: 0.2rem 0.4rem; font-size: 0.65rem; }
+.wf-circle { width: 44px; height: 44px; border-radius: 50%; border: 2px dashed #999; align-self: center; display:flex; align-items:center; justify-content:center; font-size: 0.7rem; color:#777; }
+.wf-btn { background: #999; color: #fff; font-size: 0.7rem; text-align: center; padding: 0.4rem; font-family: Arial, sans-serif; }
+.arrow { align-self: center; font-size: 1.5rem; color: #999; }
+.legend { margin-top: 2rem; font-family: Arial, sans-serif; font-size: 0.85rem; color: #555; }
+.back { display:inline-block; margin-top: 2rem; font-family: Arial, sans-serif; color: #333; }

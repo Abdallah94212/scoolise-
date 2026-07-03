@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construire le référentiel — Prepare | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .template-pick { display:flex; align-items:center; justify-content:space-between; padding:0.85rem 1rem; border:1px solid var(--border-1); border-radius:var(--radius-md); margin-bottom:0.6rem; }
+  .template-pick.added { border-color: var(--accent-600); background: var(--accent-100); }
+  .competency-item { padding: 1rem; border: 1px solid var(--border-1); border-radius: var(--radius-md); margin-bottom: 0.75rem; }
+</style>
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Prepare</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Tableau de bord</a>
+      <a class="active" href="referentiel.html">Référentiel</a>
+      <a href="ponderation.html">Pondération</a>
+      <a href="apercu.html">Aperçu candidat</a>
+      <a href="publication.html">Publication</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Tableau de bord</a><span>/</span><span>Référentiel de compétences</span></div>
+
+    <div class="stepper">
+      <span class="step current"><span class="step-num">1</span> Créer le référentiel</span>
+      <span class="step"><span class="step-num">2</span> Pondérer</span>
+      <span class="step"><span class="step-num">3</span> Prévisualiser</span>
+      <span class="step"><span class="step-num">4</span> Publier</span>
+    </div>
+
+    <h1>Référentiel de compétences</h1>
+    <p class="text-muted">Partez d'un modèle plutôt que d'une page blanche. Ajoutez, retirez ou ajustez les compétences attendues pour votre formation.</p>
+
+    <div class="grid grid-sidebar">
+      <aside class="card">
+        <h4>Modèle : BUT tertiaire</h4>
+        <p class="text-sm text-muted">Compétences suggérées pour votre type de formation.</p>
+
+        <div class="template-pick added">
+          <span class="text-sm">Résultats en mathématiques</span>
+          <span class="badge badge-success">Ajouté</span>
+        </div>
+        <div class="template-pick added">
+          <span class="text-sm">Sciences économiques et sociales</span>
+          <span class="badge badge-success">Ajouté</span>
+        </div>
+        <div class="template-pick added">
+          <span class="text-sm">Anglais</span>
+          <span class="badge badge-success">Ajouté</span>
+        </div>
+        <div class="template-pick added">
+          <span class="text-sm">Autonomie &amp; méthode</span>
+          <span class="badge badge-success">Ajouté</span>
+        </div>
+        <div class="template-pick added">
+          <span class="text-sm">Expérience pratique commerce/gestion</span>
+          <span class="badge badge-success">Ajouté</span>
+        </div>
+        <div class="template-pick">
+          <span class="text-sm">Communication orale</span>
+          <button class="btn btn-secondary btn-sm">+ Ajouter</button>
+        </div>
+        <div class="template-pick">
+          <span class="text-sm">Mobilité géographique</span>
+          <button class="btn btn-secondary btn-sm">+ Ajouter</button>
+        </div>
+
+        <button class="btn btn-ghost btn-block mt-2">+ Créer une compétence personnalisée</button>
+      </aside>
+
+      <div>
+        <div class="card">
+          <h3>Compétences retenues (5)</h3>
+
+          <div class="competency-item">
+            <div class="flex-between">
+              <strong>Résultats en mathématiques</strong>
+              <button class="btn btn-ghost btn-sm" aria-label="Retirer">Retirer</button>
+            </div>
+            <div class="field mt-2 mb-0">
+              <label>Niveau minimal attendu (sur 20)</label>
+              <input type="text" value="12">
+            </div>
+          </div>
+
+          <div class="competency-item">
+            <div class="flex-between">
+              <strong>Sciences économiques et sociales</strong>
+              <button class="btn btn-ghost btn-sm">Retirer</button>
+            </div>
+            <div class="field mt-2 mb-0">
+              <label>Spécialité conservée en terminale requise</label>
+              <select><option>Recommandée</option><option>Obligatoire</option><option>Non requise</option></select>
+            </div>
+          </div>
+
+          <div class="competency-item">
+            <div class="flex-between">
+              <strong>Anglais</strong>
+              <button class="btn btn-ghost btn-sm">Retirer</button>
+            </div>
+            <div class="field mt-2 mb-0">
+              <label>Niveau minimal attendu (sur 20)</label>
+              <input type="text" value="13">
+            </div>
+          </div>
+
+          <div class="competency-item">
+            <div class="flex-between">
+              <strong>Autonomie &amp; méthode</strong>
+              <button class="btn btn-ghost btn-sm">Retirer</button>
+            </div>
+            <p class="text-sm text-muted mb-0">Évalué à partir des appréciations du bulletin (déclaratif candidat).</p>
+          </div>
+
+          <div class="competency-item" style="border-color:var(--warning);">
+            <div class="flex-between">
+              <strong>Expérience pratique commerce/gestion</strong>
+              <button class="btn btn-ghost btn-sm">Retirer</button>
+            </div>
+            <div class="field mt-2 mb-0">
+              <label>Description affichée au candidat</label>
+              <textarea>Stage, junior entreprise, projet associatif en lien avec la vente ou la gestion — même de courte durée.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-between mt-3">
+          <a class="btn btn-ghost" href="index.html">← Retour</a>
+          <a class="btn btn-primary" href="ponderation.html">Continuer — pondérer les critères →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Prepare</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>

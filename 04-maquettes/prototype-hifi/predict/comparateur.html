@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparateur — Predict | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .compare-table { width: 100%; border-collapse: collapse; background: var(--surface-1); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-1); }
+  .compare-table th, .compare-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-1); vertical-align: top; }
+  .compare-table th { background: var(--surface-0); font-family: var(--font-heading); font-size: 0.95rem; }
+  .compare-table td:first-child, .compare-table th:first-child { width: 200px; color: var(--ink-500); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: .03em; }
+  .compare-table-wrap { overflow-x: auto; }
+</style>
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Predict</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a href="profil.html">Mon profil</a>
+      <a href="recherche.html">Rechercher</a>
+      <a class="active" href="comparateur.html">Comparateur <span class="count-pill" data-comparator-count>0</span></a>
+      <a href="lexique.html">Lexique</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span><span>Comparateur</span></div>
+    <h1>Comparer mes formations</h1>
+    <p class="text-muted">Jusqu'à 3 formations, ajoutées depuis la recherche ou une fiche formation.</p>
+
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Critère</th>
+            <th>BUT Techniques de Commercialisation<br><span class="text-muted text-sm">IUT de Bordeaux</span></th>
+            <th>Licence Économie-Gestion<br><span class="text-muted text-sm">Université de Bordeaux</span></th>
+            <th>CPGE ECG<br><span class="text-muted text-sm">Lycée Montaigne</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Score global</td>
+            <td><span class="badge badge-success">82 %</span></td>
+            <td><span class="badge badge-success">76 %</span></td>
+            <td><span class="badge badge-warning">58 %</span></td>
+          </tr>
+          <tr>
+            <td>Mathématiques</td>
+            <td>90 %</td>
+            <td>82 %</td>
+            <td>88 %</td>
+          </tr>
+          <tr>
+            <td>Anglais</td>
+            <td><span style="color:var(--warning);">55 %</span></td>
+            <td>70 %</td>
+            <td><span style="color:var(--danger);">35 %</span></td>
+          </tr>
+          <tr>
+            <td>Expérience pratique</td>
+            <td><span style="color:var(--danger);">20 %</span></td>
+            <td>Non requis</td>
+            <td>Non requis</td>
+          </tr>
+          <tr>
+            <td>Places disponibles</td>
+            <td>24</td>
+            <td>180</td>
+            <td>36</td>
+          </tr>
+          <tr>
+            <td>Action</td>
+            <td><a class="btn btn-primary btn-sm" href="formation-detail.html">Voir le détail</a></td>
+            <td><a class="btn btn-secondary btn-sm" href="formation-detail.html">Voir le détail</a></td>
+            <td><a class="btn btn-secondary btn-sm" href="formation-detail.html">Voir le détail</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-info mt-3">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div>Recommandation : votre point commun sur les 3 formations est l'anglais. Le renforcer améliore votre score partout à la fois.</div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Predict</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>
