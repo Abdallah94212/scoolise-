@@ -1,6 +1,6 @@
 # Persona — Léa Martin (Predict)
 
-![type](Étudiante — utilisatrice principale de Predict)
+*Étudiante — utilisatrice principale de Predict*
 
 | | |
 |---|---|

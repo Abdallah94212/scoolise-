@@ -7,6 +7,7 @@ Réponse d'**EPI'Gency Digital** à l'appel d'offres du Ministère de l'Éducati
 - **Voir le prototype cliquable :** ouvrir [`04-maquettes/prototype-hifi/index.html`](04-maquettes/prototype-hifi/index.html) dans un navigateur (aucune installation nécessaire, HTML/CSS/JS statique).
 - **Voir les wireframes basse fidélité :** [`04-maquettes/wireframes-lowfi/predict/00-flow.html`](04-maquettes/wireframes-lowfi/predict/00-flow.html) et [`.../prepare/00-flow.html`](04-maquettes/wireframes-lowfi/prepare/00-flow.html).
 - **Support de soutenance :** [`08-soutenance/soutenance-scoolize.pptx`](08-soutenance/soutenance-scoolize.pptx) + [notes de présentation](08-soutenance/notes-soutenance.md).
+- **Audit de conformité aux consignes :** [`00-audit-final.md`](00-audit-final.md) — vérification point par point de chaque exigence de l'énoncé et de la grille de compétences.
 
 ## Structure du dépôt
 
