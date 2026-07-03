@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importer mon bulletin — Predict | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Predict</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a href="profil.html">Mon profil</a>
+      <a href="recherche.html">Rechercher</a>
+      <a href="comparateur.html">Comparateur <span class="count-pill" data-comparator-count>0</span></a>
+      <a href="lexique.html">Lexique</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container" style="max-width:720px;">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span><span>Importer mon bulletin</span></div>
+
+    <div class="stepper">
+      <span class="step current"><span class="step-num">1</span> Importer</span>
+      <span class="step"><span class="step-num">2</span> Vérifier</span>
+      <span class="step"><span class="step-num">3</span> Compléter mon profil</span>
+    </div>
+
+    <h1>Importez votre bulletin scolaire</h1>
+    <p class="text-muted">Photo ou PDF — vos notes sont extraites automatiquement, vous n'avez rien à ressaisir. Vous pourrez vérifier et corriger avant validation.</p>
+
+    <div class="card">
+      <div class="dropzone" data-dropzone tabindex="0" role="button" aria-label="Déposer ou sélectionner un fichier">
+        <input type="file" accept=".pdf,.jpg,.png" style="display:none;">
+        <svg class="icon" viewBox="0 0 24 24" width="40" height="40"><path d="M12 16V4M12 4 7 9M12 4l5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+        <h3 class="mt-2">Glissez-déposez votre bulletin ici</h3>
+        <p class="text-muted">ou cliquez pour parcourir vos fichiers (PDF, JPG, PNG — 10 Mo max)</p>
+        <button type="button" class="btn btn-primary" data-dropzone-demo>Utiliser un exemple de démonstration</button>
+      </div>
+      <div class="mt-3" data-dropzone-status></div>
+    </div>
+
+    <div class="alert alert-info mt-3">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7l-9-5Z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div>
+        <strong>Vos données restent les vôtres.</strong>
+        <p class="mb-0 text-sm">Le bulletin est utilisé uniquement pour calculer vos scores de correspondance. Vous pouvez le supprimer à tout moment. Détails dans <a href="../../05-conformite-juridique/mentions-legales-predict.md">nos engagements RGPD</a>.</p>
+      </div>
+    </div>
+
+    <div class="flex-between mt-3">
+      <a class="btn btn-ghost" href="index.html">Annuler</a>
+      <a class="btn btn-primary" href="profil.html" data-dropzone-next disabled>Continuer →</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Predict</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+<script>
+  // Dans ce prototype, active le CTA "Continuer" dès que la démo d'import est lancée
+  document.querySelector('[data-dropzone-demo]')?.addEventListener('click', () => {
+    setTimeout(() => document.querySelector('[data-dropzone-next]')?.removeAttribute('disabled'), 1300);
+  });
+</script>
+</body>
+</html>

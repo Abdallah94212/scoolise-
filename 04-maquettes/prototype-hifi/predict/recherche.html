@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rechercher une formation — Predict | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .filter-group { margin-bottom: 1.5rem; }
+  .filter-group h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); margin-bottom: 0.6rem; }
+  .result-card { display: flex; gap: 1.25rem; align-items: center; }
+  .result-score {
+    width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; color: #fff;
+  }
+  .score-high { background: var(--success); }
+  .score-mid { background: var(--warning); }
+  .score-low { background: var(--danger); }
+  .result-meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.4rem; }
+</style>
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Predict</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a href="profil.html">Mon profil</a>
+      <a class="active" href="recherche.html">Rechercher</a>
+      <a href="comparateur.html">Comparateur <span class="count-pill" data-comparator-count>0</span></a>
+      <a href="lexique.html">Lexique</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span><span>Rechercher</span></div>
+    <h1>Formations pour vous, Léa</h1>
+    <p class="text-muted">Classées par score de correspondance avec votre profil. <a href="profil.html">Modifier mon profil</a></p>
+
+    <div class="grid grid-sidebar mt-3">
+      <aside class="card" style="position:sticky; top:90px;">
+        <h3>Filtrer</h3>
+        <div class="filter-group">
+          <h4>Domaine</h4>
+          <div class="checkbox-row"><input type="checkbox" id="d1" checked><label for="d1" style="margin:0;">Économie &amp; gestion</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="d2"><label for="d2" style="margin:0;">Sciences &amp; ingénierie</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="d3"><label for="d3" style="margin:0;">Droit</label></div>
+        </div>
+        <div class="filter-group">
+          <h4>Type de formation</h4>
+          <div class="checkbox-row"><input type="checkbox" id="t1" checked><label for="t1" style="margin:0;">BUT</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="t2" checked><label for="t2" style="margin:0;">Licence</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="t3"><label for="t3" style="margin:0;">CPGE</label></div>
+        </div>
+        <div class="filter-group">
+          <h4>Score minimum</h4>
+          <div class="range-row">
+            <input type="range" min="0" max="100" value="40">
+            <span class="range-value">40 %</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-block">Réinitialiser</button>
+      </aside>
+
+      <div>
+        <div class="card card-hover result-card mb-3" onclick="location.href='formation-detail.html'">
+          <div class="result-score score-high">82%</div>
+          <div style="flex:1;">
+            <div class="flex-between">
+              <h3 class="mb-0"><a href="formation-detail.html" style="text-decoration:none;color:inherit;">BUT Techniques de Commercialisation</a></h3>
+              <span class="badge badge-success">Éligible</span>
+            </div>
+            <p class="text-muted mb-0">IUT de Bordeaux · Économie &amp; gestion</p>
+            <div class="result-meta">
+              <span class="badge badge-neutral">Maths ✓</span>
+              <span class="badge badge-neutral">SES ✓</span>
+              <span class="badge badge-warning">Anglais à renforcer</span>
+            </div>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="#" data-compare-toggle="but-tc-bordeaux" onclick="event.stopPropagation()">Ajouter au comparateur</a>
+        </div>
+
+        <div class="card card-hover result-card mb-3">
+          <div class="result-score score-high">76%</div>
+          <div style="flex:1;">
+            <div class="flex-between">
+              <h3 class="mb-0"><a href="formation-detail.html" style="text-decoration:none;color:inherit;">Licence Économie-Gestion</a></h3>
+              <span class="badge badge-success">Éligible</span>
+            </div>
+            <p class="text-muted mb-0">Université de Bordeaux · Économie &amp; gestion</p>
+            <div class="result-meta">
+              <span class="badge badge-neutral">Maths ✓</span>
+              <span class="badge badge-neutral">Méthodologie ✓</span>
+            </div>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="#" data-compare-toggle="licence-eco-bordeaux" onclick="event.stopPropagation()">Ajouter au comparateur</a>
+        </div>
+
+        <div class="card card-hover result-card mb-3">
+          <div class="result-score score-mid">58%</div>
+          <div style="flex:1;">
+            <div class="flex-between">
+              <h3 class="mb-0"><a href="formation-detail.html" style="text-decoration:none;color:inherit;">CPGE ECG (option Maths appliquées)</a></h3>
+              <span class="badge badge-warning">Compétences à renforcer</span>
+            </div>
+            <p class="text-muted mb-0">Lycée Montaigne · Classe préparatoire</p>
+            <div class="result-meta">
+              <span class="badge badge-neutral">Maths ✓</span>
+              <span class="badge badge-danger">Anglais niveau insuffisant</span>
+            </div>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="#" data-compare-toggle="cpge-ecg-montaigne" onclick="event.stopPropagation()">Ajouter au comparateur</a>
+        </div>
+
+        <div class="card card-hover result-card">
+          <div class="result-score score-low">31%</div>
+          <div style="flex:1;">
+            <div class="flex-between">
+              <h3 class="mb-0"><a href="formation-detail.html" style="text-decoration:none;color:inherit;">Licence Mathématiques</a></h3>
+              <span class="badge badge-danger">Écart important</span>
+            </div>
+            <p class="text-muted mb-0">Université de Bordeaux · Sciences</p>
+            <div class="result-meta">
+              <span class="badge badge-danger">Spécialité Physique-Chimie manquante</span>
+            </div>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="#" data-compare-toggle="licence-maths-bordeaux" onclick="event.stopPropagation()">Ajouter au comparateur</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Predict</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>

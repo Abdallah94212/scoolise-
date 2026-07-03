@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scoolize — Portail | Prototype EPI'Gency Digital</title>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  .hero {
+    background: linear-gradient(180deg, #0F172A 0%, #16213E 100%);
+    color: #fff;
+    padding: 4.5rem 0 5rem;
+  }
+  .hero h1 { color: #fff; font-size: 2.6rem; max-width: 18ch; }
+  .hero p { color: #CBD5E1; font-size: 1.15rem; max-width: 58ch; }
+  .hero-badge {
+    display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: #93C5FD; background: rgba(255,255,255,.08); padding: 0.35rem 0.8rem; border-radius: 999px; margin-bottom: 1.2rem;
+  }
+  .product-cards { margin-top: -3.5rem; }
+  .product-card {
+    background: var(--surface-1); border-radius: var(--radius-lg); padding: 2rem;
+    box-shadow: var(--shadow-2); border: 1px solid var(--border-1);
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .product-card .tag { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .tag-prepare { color: var(--prepare-600); }
+  .tag-predict { color: var(--predict-600); }
+  .kpi-row { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
+  .kpi { }
+  .kpi strong { display: block; font-family: var(--font-heading); font-size: 1.8rem; color: var(--ink-900); }
+  .kpi span { font-size: 0.85rem; color: var(--ink-500); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar" style="background:transparent;border-bottom:1px solid rgba(255,255,255,.1);position:absolute;width:100%;">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" style="color:#fff;">
+      <span class="brand-mark" style="background:#fff;color:#0F172A;">S</span>
+      Scoolize
+    </a>
+    <div class="topbar-actions">
+      <span class="text-sm" style="color:#CBD5E1;">Réponse à l'appel d'offres — EPI'Gency Digital</span>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge">Ministère de l'Éducation · Programme Scoolize</span>
+    <h1>La prochaine génération d'orientation post-bac.</h1>
+    <p>Deux outils, un même principe : rendre les critères d'admission transparents et actionnables, pour les formations comme pour les candidats.</p>
+  </div>
+</section>
+
+<main id="main" class="main" style="padding-top:0;">
+  <div class="container product-cards">
+    <div class="grid grid-2">
+      <div class="product-card">
+        <span class="tag tag-prepare">Pour les formations</span>
+        <h2 style="margin-bottom:0;">Prepare</h2>
+        <p class="text-muted">Déclarez de façon transparente les compétences et le niveau requis pour intégrer votre formation. Fini le champ de texte libre : un référentiel commun, pondéré, prévisualisable par les candidats.</p>
+        <div class="flex gap-2">
+          <a class="btn btn-primary" href="prepare/index.html">Ouvrir Prepare</a>
+          <a class="btn btn-ghost" href="../wireframes-lowfi/prepare/00-flow.html">Voir les wireframes</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <span class="tag tag-predict">Pour les candidats</span>
+        <h2 style="margin-bottom:0;">Predict</h2>
+        <p class="text-muted">Importez vos notes, obtenez un score de correspondance explicable pour chaque formation, et comprenez précisément ce qu'il vous reste à progresser.</p>
+        <div class="flex gap-2">
+          <a class="btn btn-primary" href="predict/index.html">Ouvrir Predict</a>
+          <a class="btn btn-ghost" href="../wireframes-lowfi/predict/00-flow.html">Voir les wireframes</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi"><strong>63 %</strong><span>des formations du sup. accessibles via la procédure nationale</span></div>
+      <div class="kpi"><strong>2</strong><span>produits, un référentiel de compétences commun</span></div>
+      <div class="kpi"><strong>AA/AAA</strong><span>cible d'accessibilité RGAA</span></div>
+    </div>
+
+    <div class="card mt-4">
+      <h3>À propos de ce prototype</h3>
+      <p class="text-muted mb-0">Ce prototype cliquable illustre les parcours clés identifiés lors de la recherche UX (semaine 1) et de la définition de besoins (semaine 2). Il ne s'agit pas d'une application fonctionnelle connectée à une base de données : les imports de fichiers, scores et calculs sont simulés pour démontrer l'expérience cible. Voir <code>02-vision-besoins/vision-produit.md</code> pour le détail du périmètre.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>EPI'Gency Digital — Projet Scoolize — Prototype maquettes S1-S3</span>
+    <span>Soutenance : 11 décembre</span>
+  </div>
+</footer>
+
+<script src="assets/js/prototype.js"></script>
+</body>
+</html>

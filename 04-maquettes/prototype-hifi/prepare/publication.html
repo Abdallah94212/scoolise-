@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publier les attendus — Prepare | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Prepare</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Tableau de bord</a>
+      <a href="referentiel.html">Référentiel</a>
+      <a href="ponderation.html">Pondération</a>
+      <a href="apercu.html">Aperçu candidat</a>
+      <a class="active" href="publication.html">Publication</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container" style="max-width:760px;">
+    <div class="breadcrumb"><a href="index.html">Tableau de bord</a><span>/</span><span>Publication</span></div>
+
+    <div class="stepper">
+      <span class="step done"><span class="step-num">✓</span> Créer le référentiel</span>
+      <span class="step done"><span class="step-num">✓</span> Pondérer</span>
+      <span class="step done"><span class="step-num">✓</span> Prévisualiser</span>
+      <span class="step current"><span class="step-num">4</span> Publier</span>
+    </div>
+
+    <h1>Publier vos attendus</h1>
+    <p class="text-muted">Dernière vérification avant mise en ligne sur Predict et transmission à la procédure nationale.</p>
+
+    <div class="card">
+      <h3>Récapitulatif</h3>
+      <div class="flex-between mt-1"><span class="text-muted">Formation</span><strong>BUT Techniques de Commercialisation — IUT de Bordeaux</strong></div>
+      <hr class="divider">
+      <div class="flex-between"><span class="text-muted">Compétences déclarées</span><strong>5</strong></div>
+      <hr class="divider">
+      <div class="flex-between"><span class="text-muted">Pondération</span><strong class="badge badge-success">100 % répartis</strong></div>
+      <hr class="divider">
+      <div class="flex-between"><span class="text-muted">Validation commission</span><strong class="badge badge-warning">2 / 4 membres ont validé</strong></div>
+    </div>
+
+    <div class="card mt-3">
+      <h3>Conformité légale</h3>
+      <div class="checkbox-row">
+        <input type="checkbox" id="c1" checked>
+        <label for="c1" style="margin:0; font-weight:400;">Je certifie que ces critères respectent le principe de non-discrimination et sont fondés uniquement sur des éléments pédagogiques (art. L. 612-3 du Code de l'éducation).</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="c2" checked>
+        <label for="c2" style="margin:0; font-weight:400;">J'ai vérifié l'aperçu candidat et je confirme que la formulation est compréhensible sans jargon.</label>
+      </div>
+    </div>
+
+    <div class="alert alert-warning mt-3">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <div>2 membres de la commission n'ont pas encore validé. Vous pouvez publier en tant que responsable des admissions, mais il est recommandé d'attendre le consensus complet.</div>
+    </div>
+
+    <div class="flex-between mt-3">
+      <a class="btn btn-ghost" href="apercu.html">← Retour</a>
+      <button class="btn btn-primary" onclick="document.getElementById('confirm').style.display='block'; this.setAttribute('disabled','');">Publier les attendus</button>
+    </div>
+
+    <div id="confirm" class="alert alert-info mt-3" style="display:none;">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+      <div><strong>Attendus publiés avec succès.</strong> Ils sont désormais visibles par les candidats sur Predict et archivés pour la campagne 2027.</div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Prepare</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>

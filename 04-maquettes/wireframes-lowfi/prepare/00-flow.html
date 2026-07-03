@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframes basse fidélité — Prepare</title>
+<link rel="stylesheet" href="../wireframe.css">
+</head>
+<body>
+<h1>WIREFRAME — Prepare (formation) — v0 semaine 2</h1>
+<p class="intro">Version basse fidélité, produite en semaine 2 pour valider la structure et l'enchaînement des écrans avant application de la charte graphique (voir version haute-fidélité en semaine 3, <a href="../../prototype-hifi/prepare/index.html">ici</a>).</p>
+
+<div class="flow">
+
+  <div class="screen">
+    <div class="screen-label">01 — Tableau de bord</div>
+    <div class="screen-body">
+      <div class="wf-nav"><span>Dashboard</span><span>Référentiel</span><span>Pondération</span><span>Aperçu</span><span>Publier</span></div>
+      <div style="display:flex; gap:0.4rem;">
+        <div class="wf-box" style="min-height:50px;"></div>
+        <div class="wf-box" style="min-height:50px;"></div>
+        <div class="wf-box" style="min-height:50px;"></div>
+      </div>
+      <div class="wf-bar w80"></div>
+      <div class="wf-btn">[ Continuer ]</div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">02 — Construire référentiel</div>
+    <div class="screen-body">
+      <div style="display:flex; gap:0.4rem; flex:1;">
+        <div class="wf-box" style="flex:1;"></div>
+        <div class="wf-box" style="flex:2;"></div>
+      </div>
+      <div class="wf-btn">[ Ajouter une compétence ]</div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">03 — Pondération (%)</div>
+    <div class="screen-body">
+      <div class="wf-bar w60"></div>
+      <div class="wf-bar w40"></div>
+      <div class="wf-bar w80"></div>
+      <div class="wf-bar w60"></div>
+      <div class="wf-bar w40"></div>
+      <div class="wf-btn" style="align-self:flex-end;">Total: 100%</div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">04 — Aperçu candidat</div>
+    <div class="screen-body">
+      <div class="wf-bar w80" style="background:#777; height:18px;"></div>
+      <div style="display:flex; gap:0.4rem;">
+        <div class="wf-box" style="flex:2;"></div>
+        <div class="wf-circle" style="width:70px;height:70px;">82%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen">
+    <div class="screen-label">05 — Publication</div>
+    <div class="screen-body">
+      <div class="wf-box"></div>
+      <div class="wf-bar w60"></div>
+      <div class="wf-bar w40"></div>
+      <div class="wf-btn">[ Publier les attendus ]</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <strong>Enchaînement validé avec le persona Camille :</strong> Dashboard → Référentiel (choix des compétences) → Pondération (arbitrage collectif) → Aperçu (vérification avant publication) → Publication (avec rappel légal).
+</div>
+
+<a class="back" href="../../../01-recherche-ux/personas/persona-camille-prepare.md">← Voir le persona correspondant</a>
+</body>
+</html>
