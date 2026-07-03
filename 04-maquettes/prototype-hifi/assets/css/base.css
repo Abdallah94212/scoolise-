@@ -54,8 +54,9 @@ img { max-width: 100%; }
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-sidebar { grid-template-columns: 280px 1fr; align-items: start; }
+.grid-sidebar-end { grid-template-columns: 1fr 300px; align-items: start; }
 @media (max-width: 860px) {
-  .grid-2, .grid-3, .grid-sidebar { grid-template-columns: 1fr; }
+  .grid-2, .grid-3, .grid-sidebar, .grid-sidebar-end { grid-template-columns: 1fr; }
 }
 
 /* ---------- Topbar ---------- */
