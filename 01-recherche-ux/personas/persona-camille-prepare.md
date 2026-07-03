@@ -1,6 +1,6 @@
 # Persona — Camille Dupas (Prepare)
 
-![type](Responsable des admissions — utilisatrice principale de Prepare)
+*Responsable des admissions — utilisatrice principale de Prepare*
 
 | | |
 |---|---|

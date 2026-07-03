@@ -1,6 +1,6 @@
 # Persona — Yanis Bouzid (Predict)
 
-![type](Étudiant — utilisateur secondaire de Predict, profil de diversification)
+*Étudiant — utilisateur secondaire de Predict, profil de diversification*
 
 | | |
 |---|---|
