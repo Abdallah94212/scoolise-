@@ -45,6 +45,12 @@
       <p class="text-sm text-muted mt-3 mb-0">Pas encore de compte ? <a href="register.html">Créer un compte candidat</a></p>
       <p class="text-sm text-muted mb-0">Comptes de démonstration : <code>admin@scoolize.fr</code> / <code>Admin1234!</code> (admin) ou <code>lea.martin@lycee-demo.fr</code> / <code>Etudiant1234!</code> (étudiant).</p>
     </div>
+
+    <div class="card mt-3" style="background:#0F172A;">
+      <h3 style="color:#fff;">Journal de diagnostic (temporaire)</h3>
+      <p class="text-sm" style="color:#94A3B8;">Ce bloc affiche en direct chaque étape de la connexion — utile pour identifier précisément où ça bloque.</p>
+      <pre id="debug-log" style="color:#4ADE80; font-size:0.8rem; white-space:pre-wrap; margin:0;">(en attente d'une tentative de connexion...)</pre>
+    </div>
   </div>
 </main>
 
@@ -63,22 +69,51 @@
   }
   const { api, auth, ApiError } = window.ScoolizeAPI;
 
+  const debugLog = document.getElementById('debug-log');
+  function log(msg) {
+    const time = new Date().toLocaleTimeString('fr-FR');
+    debugLog.textContent += `\n[${time}] ${msg}`;
+  }
+  log('Script de la page chargé, formulaire prêt.');
+
+  // Avertit si la page est sur le point d'être quittée (navigation) pendant
+  // le traitement — permet de confirmer si un rechargement intempestif a lieu.
+  window.addEventListener('beforeunload', () => {
+    try { sessionStorage.setItem('scoolize_debug_last', debugLog.textContent); } catch (e) {}
+  });
+  const previousLog = (() => { try { return sessionStorage.getItem('scoolize_debug_last'); } catch (e) { return null; } })();
+  if (previousLog) {
+    log('--- Journal de la tentative précédente (avant un rechargement de page) ---');
+    debugLog.textContent += '\n' + previousLog;
+    log('--- Fin du journal précédent ---');
+    try { sessionStorage.removeItem('scoolize_debug_last'); } catch (e) {}
+  }
+
   document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    log('Soumission interceptée par le JavaScript (pas de rechargement natif).');
     const errorBox = document.getElementById('form-error');
     errorBox.style.display = 'none';
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
+    log(`Tentative de connexion pour : ${email} (mot de passe de ${password.length} caractères saisi).`);
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Connexion…';
 
     try {
+      log(`Envoi de la requête à ${api.get ? '' : ''}POST /auth/login…`);
       const { user, token } = await api.post('/auth/login', { email, password });
+      log(`Réponse reçue avec succès. Utilisateur : ${user.email}, rôle : ${user.role}.`);
       auth.setSession(token, user);
-      window.location.href = user.role === 'ADMIN' ? '../admin/dashboard.html' : '../predict/index.html';
+      const savedBack = localStorage.getItem('scoolize_token');
+      log(`Session enregistrée dans localStorage : ${savedBack ? 'OK (jeton relu avec succès)' : 'ÉCHEC (jeton absent après écriture !)'}.`);
+      const dest = user.role === 'ADMIN' ? '../admin/dashboard.html' : '../predict/index.html';
+      log(`Redirection vers ${dest}…`);
+      window.location.href = dest;
     } catch (err) {
+      log(`ERREUR : ${err && err.message ? err.message : err}`);
       errorBox.textContent = err instanceof ApiError ? err.message : 'Une erreur inattendue est survenue.';
       errorBox.style.display = 'block';
     } finally {
