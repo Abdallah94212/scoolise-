@@ -69,6 +69,10 @@
       </aside>
 
       <div>
+        <div id="script-error" class="alert alert-danger mb-3" style="display:none;">
+          Le script <code>assets/js/api.js</code> n'a pas pu être chargé : la recherche ne peut pas fonctionner.
+          Rechargez la page (Cmd/Ctrl + Maj + R) ou vérifiez qu'aucune extension de navigateur (bloqueur de scripts, antivirus) ne bloque les fichiers locaux.
+        </div>
         <p id="results-count" class="text-muted text-sm"></p>
         <div id="results-list"></div>
         <div id="results-empty" class="alert alert-info" style="display:none;">Aucune formation ne correspond à ces critères.</div>
@@ -85,11 +89,15 @@
   </div>
 </footer>
 
-<script src="../assets/js/api.js"></script>
+<script src="../assets/js/api.js" onerror="document.getElementById('script-error').style.display='block';"></script>
 <script>window.SCOOLIZE_BASE = '../';</script>
 <script src="../assets/js/nav-auth.js"></script>
 <script src="../assets/js/prototype.js"></script>
 <script>
+  if (!window.ScoolizeAPI) {
+    document.getElementById('script-error').style.display = 'block';
+    throw new Error("assets/js/api.js n'a pas été chargé correctement — arrêt du script de la page.");
+  }
   const { api } = window.ScoolizeAPI;
   const state = { q: '', domain: '', type: '', page: 1 };
   const DOMAINS = ['Économie & gestion', 'Sciences & ingénierie', 'Droit', 'Sciences', 'Sciences humaines'];

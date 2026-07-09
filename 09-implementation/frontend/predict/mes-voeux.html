@@ -42,6 +42,10 @@
     <p class="text-muted">10 vœux maximum. Le rang détermine votre ordre de préférence — vous pouvez le modifier à tout moment tant que la campagne est ouverte.</p>
 
     <div id="error-box" class="alert alert-danger" style="display:none;"></div>
+    <div id="script-error" class="alert alert-danger" style="display:none;">
+      Le script <code>assets/js/api.js</code> n'a pas pu être chargé : cette page ne peut pas fonctionner.
+      Rechargez la page (Cmd/Ctrl + Maj + R) ou vérifiez qu'aucune extension de navigateur (bloqueur de scripts, antivirus) ne bloque les fichiers locaux.
+    </div>
     <div id="not-logged" class="alert alert-info" style="display:none;">
       Vous devez être connecté pour consulter vos vœux. <a href="../auth/login.html">Se connecter</a>
     </div>
@@ -60,11 +64,15 @@
   </div>
 </footer>
 
-<script src="../assets/js/api.js"></script>
+<script src="../assets/js/api.js" onerror="document.getElementById('script-error').style.display='block';"></script>
 <script>window.SCOOLIZE_BASE = '../';</script>
 <script src="../assets/js/nav-auth.js"></script>
 <script src="../assets/js/prototype.js"></script>
 <script>
+  if (!window.ScoolizeAPI) {
+    document.getElementById('script-error').style.display = 'block';
+    throw new Error("assets/js/api.js n'a pas été chargé correctement — arrêt du script de la page.");
+  }
   const { api, auth } = window.ScoolizeAPI;
 
   function updateWishesCountBadge(count) {

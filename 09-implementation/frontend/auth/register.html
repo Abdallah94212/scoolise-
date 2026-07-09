@@ -27,8 +27,12 @@
       <p class="text-muted">Votre numéro INE (Identifiant National Étudiant) est requis, comme lors de l'inscription sur Parcoursup.</p>
 
       <div id="form-error" class="alert alert-danger mb-3" style="display:none;"></div>
+      <div id="script-error" class="alert alert-danger mb-3" style="display:none;">
+        Le script <code>assets/js/api.js</code> n'a pas pu être chargé : le formulaire ne peut pas fonctionner.
+        Rechargez la page (Cmd/Ctrl + Maj + R) ou vérifiez qu'aucune extension de navigateur (bloqueur de scripts, antivirus) ne bloque les fichiers locaux.
+      </div>
 
-      <form id="register-form" novalidate>
+      <form id="register-form" novalidate onsubmit="return false;">
         <div class="grid grid-2">
           <div class="field" data-field="firstName">
             <label for="firstName">Prénom</label>
@@ -84,8 +88,12 @@
   </div>
 </footer>
 
-<script src="../assets/js/api.js"></script>
+<script src="../assets/js/api.js" onerror="document.getElementById('script-error').style.display='block';"></script>
 <script>
+  if (!window.ScoolizeAPI) {
+    document.getElementById('script-error').style.display = 'block';
+    throw new Error("assets/js/api.js n'a pas été chargé correctement — arrêt du script de la page.");
+  }
   const { api, auth, ApiError } = window.ScoolizeAPI;
   const INE_REGEX = /^[0-9]{9}[0-9A-Z][A-Z]$/;
 
