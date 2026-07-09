@@ -10,7 +10,13 @@ const { errorHandler, notFoundHandler } = require('./middlewares/error.middlewar
 
 const app = express();
 
-app.use(cors({ origin: env.frontendOrigin }));
+// Réfléchit l'origine de la requête plutôt qu'une seule origine fixe : le
+// frontend est un site statique qui peut être ouvert de plusieurs façons
+// (serveur local sur un port différent, fichier ouvert directement en
+// file:// → Origin "null", etc.). Aucune donnée de session n'est stockée en
+// cookie (JWT en en-tête Authorization), donc réfléchir l'origine ne pose pas
+// de risque CSRF ici.
+app.use(cors({ origin: true }));
 app.use(express.json());
 if (env.nodeEnv !== 'test') {
   app.use(morgan('dev'));
