@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utilisateurs — Administration | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Administration</span></a>
+    <div class="topbar-actions">
+      <span class="badge badge-neutral" id="admin-name">—</span>
+      <button class="btn btn-secondary btn-sm" id="logout-btn">Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <nav class="admin-nav">
+      <a href="dashboard.html">Tableau de bord</a>
+      <a class="active" href="utilisateurs.html">Utilisateurs</a>
+      <a href="ecoles.html">Écoles</a>
+      <a href="formations.html">Formations</a>
+      <a href="statistiques.html">Statistiques</a>
+      <a href="candidatures.html">Candidatures</a>
+    </nav>
+
+    <h1>Gestion des utilisateurs</h1>
+    <div id="error-box" class="alert alert-danger" style="display:none;"></div>
+
+    <div class="flex gap-2 mb-3">
+      <input type="text" id="q" placeholder="Rechercher (nom, email, INE)" style="max-width:280px;">
+      <select id="role-filter">
+        <option value="">Tous les rôles</option>
+        <option value="STUDENT">Étudiant</option>
+        <option value="ADMIN">Administrateur</option>
+      </select>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Nom</th><th>Email</th><th>INE</th><th>Rôle</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p id="empty-msg" class="text-muted mt-2" style="display:none;">Aucun utilisateur trouvé.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Administration</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/admin-guard.js"></script>
+<script>
+  const { api, auth } = window.ScoolizeAPI;
+  document.getElementById('admin-name').textContent = `${auth.getUser().firstName} ${auth.getUser().lastName}`;
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    auth.clearSession();
+    window.location.href = '../auth/login.html';
+  });
+
+  function showError(err) {
+    const box = document.getElementById('error-box');
+    box.textContent = err.message;
+    box.style.display = 'block';
+  }
+
+  async function load() {
+    try {
+      const q = document.getElementById('q').value.trim();
+      const role = document.getElementById('role-filter').value;
+      const data = await api.get('/admin/users', { q: q || undefined, role: role || undefined, pageSize: 50 });
+      const rows = document.getElementById('rows');
+      document.getElementById('empty-msg').style.display = data.items.length ? 'none' : 'block';
+      rows.innerHTML = data.items
+        .map(
+          (u) => `
+        <tr>
+          <td>${u.firstName} ${u.lastName}</td>
+          <td>${u.email}</td>
+          <td>${u.ine || '—'}</td>
+          <td>
+            <select data-role-select="${u.id}">
+              <option value="STUDENT" ${u.role === 'STUDENT' ? 'selected' : ''}>Étudiant</option>
+              <option value="ADMIN" ${u.role === 'ADMIN' ? 'selected' : ''}>Administrateur</option>
+            </select>
+          </td>
+          <td>
+            <button class="btn btn-secondary btn-sm" data-save="${u.id}">Enregistrer</button>
+            <button class="btn btn-ghost btn-sm" data-delete="${u.id}" style="color:var(--danger);">Supprimer</button>
+          </td>
+        </tr>`
+        )
+        .join('');
+
+      rows.querySelectorAll('[data-save]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.save;
+          const role = rows.querySelector(`[data-role-select="${id}"]`).value;
+          try {
+            await api.put(`/admin/users/${id}`, { role });
+            load();
+          } catch (err) {
+            showError(err);
+          }
+        });
+      });
+
+      rows.querySelectorAll('[data-delete]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Supprimer définitivement cet utilisateur ?')) return;
+          try {
+            await api.del(`/admin/users/${btn.dataset.delete}`);
+            load();
+          } catch (err) {
+            showError(err);
+          }
+        });
+      });
+    } catch (err) {
+      showError(err);
+    }
+  }
+
+  document.getElementById('q').addEventListener('input', load);
+  document.getElementById('role-filter').addEventListener('change', load);
+  load();
+</script>
+</body>
+</html>

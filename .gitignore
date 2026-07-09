@@ -1,0 +1,18 @@
+# Fichiers système
+.DS_Store
+
+# Configuration locale d'outils (IDE / assistants) — non pertinente pour le dépôt du projet
+.claude/
+
+# Node.js (09-implementation/backend)
+node_modules/
+npm-debug.log*
+
+# Variables d'environnement (secrets locaux)
+.env
+.env.test
+.env.local
+
+# Build / couverture de tests
+dist/
+coverage/

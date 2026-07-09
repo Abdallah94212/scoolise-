@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum WishStatus {
+  EN_ATTENTE
+  ACCEPTE
+  REFUSE
+  LISTE_ATTENTE
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(STUDENT)
+  firstName    String
+  lastName     String
+  ine          String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  wishes Wish[]
+
+  @@map("users")
+}
+
+model School {
+  id          String   @id @default(uuid())
+  name        String
+  city        String
+  type        String
+  description String?
+  website     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  formations Formation[]
+
+  @@map("schools")
+}
+
+model Formation {
+  id          String   @id @default(uuid())
+  name        String
+  type        String
+  domain      String
+  description String?
+  capacity    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  stats  FormationStat[]
+  wishes Wish[]
+
+  @@map("formations")
+}
+
+model FormationStat {
+  id             String   @id @default(uuid())
+  year           Int
+  nbVoeux        Int      @default(0)
+  nbPropositions Int      @default(0)
+  nbAdmis        Int      @default(0)
+  tauxAcces      Float    @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id], onDelete: Cascade)
+
+  @@unique([formationId, year])
+  @@map("formation_stats")
+}
+
+model Wish {
+  id        String     @id @default(uuid())
+  rank      Int
+  status    WishStatus @default(EN_ATTENTE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  studentId String
+  student   User   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, formationId])
+  @@map("wishes")
+}

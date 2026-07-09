@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mes vœux — Predict | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .wish-row { display: flex; align-items: center; gap: 1rem; }
+  .wish-rank {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--predict-100); color: var(--predict-700);
+    display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: 700; flex-shrink: 0;
+  }
+</style>
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Predict</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a href="profil.html">Mon profil</a>
+      <a href="recherche.html">Rechercher</a>
+      <a class="active" href="mes-voeux.html">Mes vœux <span class="count-pill" data-wishes-count>0</span></a>
+      <a href="comparateur.html">Comparateur <span class="count-pill" data-comparator-count>0</span></a>
+      <a href="lexique.html">Lexique</a>
+    </nav>
+    <div class="topbar-actions" data-auth-slot style="display:flex; gap:0.5rem; align-items:center;"></div>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span><span>Mes vœux</span></div>
+    <h1>Mes vœux</h1>
+    <p class="text-muted">10 vœux maximum. Le rang détermine votre ordre de préférence — vous pouvez le modifier à tout moment tant que la campagne est ouverte.</p>
+
+    <div id="error-box" class="alert alert-danger" style="display:none;"></div>
+    <div id="not-logged" class="alert alert-info" style="display:none;">
+      Vous devez être connecté pour consulter vos vœux. <a href="../auth/login.html">Se connecter</a>
+    </div>
+
+    <div id="wishes-list"></div>
+    <div id="empty-box" class="alert alert-info" style="display:none;">
+      Vous n'avez encore fait aucun vœu. <a href="recherche.html">Rechercher une formation</a> pour en ajouter un.
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Predict</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script>window.SCOOLIZE_BASE = '../';</script>
+<script src="../assets/js/nav-auth.js"></script>
+<script src="../assets/js/prototype.js"></script>
+<script>
+  const { api, auth } = window.ScoolizeAPI;
+
+  function updateWishesCountBadge(count) {
+    document.querySelectorAll('[data-wishes-count]').forEach((el) => {
+      el.textContent = count;
+      el.style.display = count > 0 ? 'inline-flex' : 'none';
+    });
+  }
+
+  function showError(err) {
+    const box = document.getElementById('error-box');
+    box.textContent = err.message;
+    box.style.display = 'block';
+  }
+
+  async function load() {
+    if (!auth.isAuthenticated()) {
+      document.getElementById('not-logged').style.display = 'block';
+      return;
+    }
+    if (auth.isAdmin()) {
+      document.getElementById('error-box').textContent = "Cette page est réservée aux comptes étudiants. Consultez plutôt l'espace administration → Candidatures.";
+      document.getElementById('error-box').style.display = 'block';
+      return;
+    }
+
+    try {
+      const wishes = await api.get('/wishes/me');
+      updateWishesCountBadge(wishes.length);
+
+      const list = document.getElementById('wishes-list');
+      document.getElementById('empty-box').style.display = wishes.length ? 'none' : 'block';
+
+      list.innerHTML = wishes
+        .map(
+          (w) => `
+        <div class="card mb-3 wish-row" data-wish-id="${w.id}">
+          <div class="wish-rank">${w.rank}</div>
+          <div style="flex:1;">
+            <div class="flex-between">
+              <h3 class="mb-0">${w.formation.name}</h3>
+              <span class="badge ${w.status === 'ACCEPTE' ? 'badge-success' : w.status === 'REFUSE' ? 'badge-danger' : w.status === 'LISTE_ATTENTE' ? 'badge-warning' : 'badge-neutral'}">${
+                { EN_ATTENTE: 'En attente', ACCEPTE: 'Accepté', REFUSE: 'Refusé', LISTE_ATTENTE: "Liste d'attente" }[w.status]
+              }</span>
+            </div>
+            <p class="text-muted mb-0">${w.formation.school.name} · ${w.formation.school.city}</p>
+          </div>
+          <div class="flex gap-2" style="align-items:center;">
+            <label class="text-sm text-muted" style="margin:0;">Rang
+              <input type="number" min="1" max="10" value="${w.rank}" style="width:60px;" data-rank-input="${w.id}">
+            </label>
+            <button class="btn btn-secondary btn-sm" data-save-rank="${w.id}">Enregistrer</button>
+            <button class="btn btn-ghost btn-sm" data-remove="${w.id}" style="color:var(--danger);">Retirer</button>
+          </div>
+        </div>`
+        )
+        .join('');
+
+      list.querySelectorAll('[data-save-rank]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.saveRank;
+          const rank = Number(document.querySelector(`[data-rank-input="${id}"]`).value);
+          try {
+            await api.put(`/wishes/${id}`, { rank });
+            load();
+          } catch (err) {
+            showError(err);
+          }
+        });
+      });
+
+      list.querySelectorAll('[data-remove]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Retirer ce vœu ?')) return;
+          try {
+            await api.del(`/wishes/${btn.dataset.remove}`);
+            load();
+          } catch (err) {
+            showError(err);
+          }
+        });
+      });
+    } catch (err) {
+      showError(err);
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: scoolize
+      POSTGRES_PASSWORD: scoolize
+      POSTGRES_DB: scoolize
+    ports:
+      - "5433:5432"
+    volumes:
+      - scoolize_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scoolize"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgresql://scoolize:scoolize@db:5432/scoolize
+      JWT_SECRET: change-me-in-production-please
+      JWT_EXPIRES_IN: 2h
+      FRONTEND_ORIGIN: http://localhost:8080
+    ports:
+      - "4000:4000"
+
+  frontend:
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
+
+volumes:
+  scoolize_db_data:

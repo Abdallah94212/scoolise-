@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BUT Techniques de Commercialisation — Predict | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .criterion-row { padding: 1rem 0; border-bottom: 1px solid var(--border-1); }
+  .criterion-row:last-child { border-bottom: none; }
+  .criterion-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 1rem; }
+  .criterion-weight { font-size: 0.78rem; color: var(--ink-500); }
+  .gap-note { font-size: 0.85rem; margin-top: 0.4rem; }
+</style>
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Predict</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a href="profil.html">Mon profil</a>
+      <a class="active" href="recherche.html">Rechercher</a>
+      <a href="mes-voeux.html">Mes vœux <span class="count-pill" data-wishes-count>0</span></a>
+      <a href="comparateur.html">Comparateur <span class="count-pill" data-comparator-count>0</span></a>
+      <a href="lexique.html">Lexique</a>
+    </nav>
+    <div class="topbar-actions" data-auth-slot style="display:flex; gap:0.5rem; align-items:center;"></div>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span><a href="recherche.html">Rechercher</a><span>/</span><span id="bc-name">Formation</span></div>
+
+    <div id="formation-error" class="alert alert-danger" style="display:none;"></div>
+
+    <div class="grid grid-sidebar-end" id="formation-content" style="display:none;">
+      <div>
+        <span class="badge badge-info" id="f-badge">—</span>
+        <h1 class="mt-2" id="f-name">—</h1>
+        <p class="text-muted" id="f-subtitle">—</p>
+        <p class="text-muted text-sm" id="f-description"></p>
+
+        <section class="card section">
+          <div class="flex-between">
+            <h3 class="mb-0">Exemple illustratif de score de correspondance</h3>
+            <span class="text-sm" data-term="Cette section est un exemple illustratif : le référentiel de compétences pondéré (Prepare) n'est pas encore branché sur l'API réelle dans cette version. Seules les informations de la formation ci-dessus (nom, établissement, capacité, description) sont des données réelles.">Pourquoi « illustratif » ?</span>
+          </div>
+
+          <div class="criterion-row">
+            <div class="criterion-head">
+              <strong>Résultats en mathématiques</strong>
+              <span class="criterion-weight">Poids 30 %</span>
+            </div>
+            <div class="progress"><span style="width:90%; background:var(--success);"></span></div>
+            <p class="gap-note" style="color:var(--success);">Votre moyenne (16.2) dépasse largement le niveau attendu (12/20).</p>
+          </div>
+
+          <div class="criterion-row">
+            <div class="criterion-head">
+              <strong>Sciences économiques et sociales</strong>
+              <span class="criterion-weight">Poids 25 %</span>
+            </div>
+            <div class="progress"><span style="width:85%; background:var(--success);"></span></div>
+            <p class="gap-note" style="color:var(--success);">Spécialité conservée jusqu'au bac, en cohérence avec l'attendu.</p>
+          </div>
+
+          <div class="criterion-row">
+            <div class="criterion-head">
+              <strong>Anglais</strong>
+              <span class="criterion-weight">Poids 15 %</span>
+            </div>
+            <div class="progress"><span style="width:55%; background:var(--warning);"></span></div>
+            <p class="gap-note" style="color:var(--warning);">Niveau attendu : 13/20. Votre moyenne actuelle : 11.5/20 — écart de 1.5 point, comblable d'ici la fin de l'année.</p>
+          </div>
+
+          <div class="criterion-row">
+            <div class="criterion-head">
+              <strong>Autonomie &amp; méthode</strong>
+              <span class="criterion-weight">Poids 15 %</span>
+            </div>
+            <div class="progress"><span style="width:80%; background:var(--success);"></span></div>
+            <p class="gap-note" style="color:var(--success);">Cohérent avec les appréciations de votre bulletin.</p>
+          </div>
+
+          <div class="criterion-row">
+            <div class="criterion-head">
+              <strong>Expérience pratique en commerce/gestion</strong>
+              <span class="criterion-weight">Poids 15 %</span>
+            </div>
+            <div class="progress"><span style="width:20%; background:var(--danger);"></span></div>
+            <p class="gap-note" style="color:var(--danger);">Aucune expérience déclarée dans votre profil. <a href="profil.html">Ajoutez un stage ou projet</a> pour améliorer ce critère.</p>
+          </div>
+        </section>
+
+        <section class="card section">
+          <h3>Ce que vous pouvez faire pour progresser</h3>
+          <ul>
+            <li>Renforcer votre niveau d'anglais (soutien scolaire, certification type TOEIC blanc) — impact estimé : <strong>+6 points</strong>.</li>
+            <li>Déclarer une expérience pratique même courte (stage d'observation, junior entreprise) — impact estimé : <strong>+9 points</strong>.</li>
+          </ul>
+        </section>
+
+        <section class="card section" id="stats-section" style="display:none;">
+          <h3>Taux d'accès sur les 5 dernières années</h3>
+          <p class="text-muted text-sm">Données réelles (nombre de vœux, propositions et admis par campagne), taux calculé automatiquement.</p>
+          <div id="stats-rows"></div>
+          <p id="stats-empty" class="text-muted text-sm" style="display:none;">Aucune statistique n'a encore été renseignée pour cette formation.</p>
+        </section>
+
+        <section class="card section">
+          <h3>Attendus déclarés par la formation</h3>
+          <p class="text-muted text-sm">Tels que publiés par l'équipe pédagogique via Prepare — <a href="../prepare/apercu.html">voir la vue formation</a>.</p>
+          <blockquote style="border-left:3px solid var(--accent-600); padding-left:1rem; color:var(--ink-700); margin:0;">
+            "Nous recherchons des candidats à l'aise avec le raisonnement quantitatif, capables de travailler en autonomie sur des projets concrets, avec un niveau d'anglais permettant de suivre des cours en langue étrangère dès la 2ᵉ année."
+          </blockquote>
+        </section>
+      </div>
+
+      <aside>
+        <div class="card" style="position:sticky; top:90px; text-align:center;">
+          <div class="score-gauge" data-score="82" style="margin:0 auto;">
+            <div class="score-gauge-inner"><strong>82</strong><span>/ 100</span></div>
+          </div>
+          <p class="badge badge-success mt-2">Éligible</p>
+          <p class="text-sm text-muted">Score indicatif d'aide à la décision — ne garantit pas l'admission (l'ordre d'appel dépend aussi des autres candidats).</p>
+          <button class="btn btn-primary btn-block" id="wish-btn">Faire un vœu pour cette formation</button>
+          <p id="wish-feedback" class="text-sm mt-1" style="display:none;"></p>
+          <a class="btn btn-secondary btn-block mt-1" href="#" id="compare-btn">Ajouter au comparateur</a>
+          <a class="btn btn-ghost btn-block mt-1" href="recherche.html">← Retour aux résultats</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Predict</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script>window.SCOOLIZE_BASE = '../';</script>
+<script src="../assets/js/nav-auth.js"></script>
+<script src="../assets/js/prototype.js"></script>
+<script>
+  const { api, auth, ApiError } = window.ScoolizeAPI;
+
+  async function loadFormation() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    const errorBox = document.getElementById('formation-error');
+    const content = document.getElementById('formation-content');
+
+    if (!id) {
+      errorBox.textContent = "Aucune formation demandée (identifiant manquant dans l'URL).";
+      errorBox.style.display = 'block';
+      return;
+    }
+
+    try {
+      const formation = await api.get(`/formations/${id}`);
+      document.title = `${formation.name} — Predict | Scoolize`;
+      document.getElementById('bc-name').textContent = formation.name;
+      document.getElementById('f-badge').textContent = `${formation.type} · ${formation.domain}`;
+      document.getElementById('f-name').textContent = formation.name;
+      document.getElementById('f-subtitle').textContent =
+        `${formation.school.name} · ${formation.school.city} · ${formation.capacity} place${formation.capacity > 1 ? 's' : ''}`;
+      document.getElementById('f-description').textContent = formation.description || '';
+      content.style.display = '';
+      setupCompareButton(formation.id);
+      setupWishButton(formation.id);
+      loadStats(formation.id);
+    } catch (err) {
+      errorBox.textContent = `Impossible de charger cette formation : ${err.message}`;
+      errorBox.style.display = 'block';
+    }
+  }
+
+  async function loadStats(formationId) {
+    const section = document.getElementById('stats-section');
+    const rows = document.getElementById('stats-rows');
+    const empty = document.getElementById('stats-empty');
+
+    try {
+      const stats = await api.get(`/formations/${formationId}/stats`);
+      section.style.display = '';
+      rows.innerHTML = '';
+      empty.style.display = stats.length ? 'none' : 'block';
+
+      stats.forEach((stat) => {
+        const row = document.createElement('div');
+        row.className = 'criterion-row';
+        const barColor = stat.tauxAcces >= 50 ? 'var(--success)' : stat.tauxAcces >= 25 ? 'var(--warning)' : 'var(--danger)';
+        row.innerHTML = `
+          <div class="criterion-head">
+            <strong>${stat.year}</strong>
+            <span class="criterion-weight">${stat.tauxAcces} % d'accès · ${stat.nbAdmis} admis / ${stat.nbVoeux} vœux</span>
+          </div>
+          <div class="progress"><span style="width:${Math.min(stat.tauxAcces, 100)}%; background:${barColor};"></span></div>`;
+        rows.appendChild(row);
+      });
+    } catch (err) {
+      section.style.display = '';
+      rows.innerHTML = `<p class="text-sm" style="color:var(--danger);">Impossible de charger les statistiques : ${err.message}</p>`;
+    }
+  }
+
+  async function setupWishButton(formationId) {
+    const btn = document.getElementById('wish-btn');
+    const feedback = document.getElementById('wish-feedback');
+
+    if (!auth.isAuthenticated()) {
+      btn.textContent = 'Se connecter pour faire un vœu';
+      btn.addEventListener('click', () => { window.location.href = '../auth/login.html'; });
+      return;
+    }
+    if (auth.isAdmin()) {
+      btn.style.display = 'none';
+      return;
+    }
+
+    // Vérifie si un vœu existe déjà pour cette formation, pour refléter l'état réel.
+    try {
+      const mine = await api.get('/wishes/me');
+      if (mine.some((w) => w.formation.id === formationId)) {
+        btn.textContent = 'Vœu déjà fait ✓';
+        btn.disabled = true;
+        btn.classList.replace('btn-primary', 'btn-secondary');
+      }
+    } catch (err) {
+      // Ignoré : le bouton reste utilisable, l'erreur réelle apparaîtra au clic si besoin.
+    }
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      feedback.style.display = 'none';
+      try {
+        await api.post('/wishes', { formationId });
+        btn.textContent = 'Vœu déjà fait ✓';
+        btn.classList.replace('btn-primary', 'btn-secondary');
+        feedback.textContent = 'Vœu enregistré. Retrouvez-le dans « Mes vœux ».';
+        feedback.style.color = 'var(--success)';
+        feedback.style.display = 'block';
+      } catch (err) {
+        btn.disabled = false;
+        feedback.textContent = err instanceof ApiError ? err.message : 'Une erreur est survenue.';
+        feedback.style.color = 'var(--danger)';
+        feedback.style.display = 'block';
+      }
+    });
+  }
+
+  // Gère le bouton comparateur pour cette formation réelle (même logique/clé
+  // localStorage que assets/js/prototype.js, mais liée à l'id chargé après coup).
+  function setupCompareButton(formationId) {
+    const KEY = 'scoolize_comparateur';
+    const getList = () => JSON.parse(localStorage.getItem(KEY) || '[]');
+    const setList = (list) => localStorage.setItem(KEY, JSON.stringify(list));
+    const btn = document.getElementById('compare-btn');
+
+    const sync = () => {
+      const active = getList().includes(formationId);
+      btn.classList.toggle('btn-primary', !active);
+      btn.classList.toggle('btn-secondary', active);
+      btn.textContent = active ? 'Ajouté au comparateur ✓' : 'Ajouter au comparateur';
+    };
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let list = getList();
+      if (list.includes(formationId)) {
+        list = list.filter((x) => x !== formationId);
+      } else {
+        if (list.length >= 3) {
+          alert('Vous pouvez comparer 3 formations maximum. Retirez-en une avant d\'en ajouter une nouvelle.');
+          return;
+        }
+        list.push(formationId);
+      }
+      setList(list);
+      sync();
+      if (typeof updateComparatorCount === 'function') updateComparatorCount();
+    });
+
+    sync();
+  }
+
+  document.addEventListener('DOMContentLoaded', loadFormation, { once: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Se connecter — Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .auth-wrap { max-width: 420px; margin: 4rem auto; }
+</style>
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize</a>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container auth-wrap">
+    <div class="card section">
+      <h1>Se connecter</h1>
+
+      <div id="form-error" class="alert alert-danger mb-3" style="display:none;"></div>
+
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Se connecter</button>
+      </form>
+
+      <p class="text-sm text-muted mt-3 mb-0">Pas encore de compte ? <a href="register.html">Créer un compte candidat</a></p>
+      <p class="text-sm text-muted mb-0">Comptes de démonstration : <code>admin@scoolize.fr</code> / <code>Admin1234!</code> (admin) ou <code>lea.martin@lycee-demo.fr</code> / <code>Etudiant1234!</code> (étudiant).</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script>
+  const { api, auth, ApiError } = window.ScoolizeAPI;
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorBox = document.getElementById('form-error');
+    errorBox.style.display = 'none';
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Connexion…';
+
+    try {
+      const { user, token } = await api.post('/auth/login', { email, password });
+      auth.setSession(token, user);
+      window.location.href = user.role === 'ADMIN' ? '../admin/dashboard.html' : '../predict/index.html';
+    } catch (err) {
+      errorBox.textContent = err instanceof ApiError ? err.message : 'Une erreur inattendue est survenue.';
+      errorBox.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Se connecter';
+    }
+  });
+</script>
+</body>
+</html>

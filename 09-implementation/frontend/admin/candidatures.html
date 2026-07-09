@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candidatures — Administration | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Administration</span></a>
+    <div class="topbar-actions">
+      <span class="badge badge-neutral" id="admin-name">—</span>
+      <button class="btn btn-secondary btn-sm" id="logout-btn">Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <nav class="admin-nav">
+      <a href="dashboard.html">Tableau de bord</a>
+      <a href="utilisateurs.html">Utilisateurs</a>
+      <a href="ecoles.html">Écoles</a>
+      <a href="formations.html">Formations</a>
+      <a href="statistiques.html">Statistiques</a>
+      <a class="active" href="candidatures.html">Candidatures</a>
+    </nav>
+
+    <h1>Candidatures (vœux)</h1>
+    <div id="error-box" class="alert alert-danger" style="display:none;"></div>
+
+    <div class="field" style="max-width:260px;">
+      <label for="status-filter">Filtrer par statut</label>
+      <select id="status-filter">
+        <option value="">Tous les statuts</option>
+        <option value="EN_ATTENTE">En attente</option>
+        <option value="ACCEPTE">Accepté</option>
+        <option value="LISTE_ATTENTE">Liste d'attente</option>
+        <option value="REFUSE">Refusé</option>
+      </select>
+    </div>
+
+    <div class="data-table-wrap mt-2">
+      <table class="data-table">
+        <thead><tr><th>Étudiant</th><th>INE</th><th>Formation</th><th>Établissement</th><th>Rang</th><th>Statut</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p id="empty-msg" class="text-muted mt-2" style="display:none;">Aucune candidature trouvée.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Administration</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/admin-guard.js"></script>
+<script>
+  const { api, auth } = window.ScoolizeAPI;
+  document.getElementById('admin-name').textContent = `${auth.getUser().firstName} ${auth.getUser().lastName}`;
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    auth.clearSession();
+    window.location.href = '../auth/login.html';
+  });
+
+  const STATUS_LABELS = {
+    EN_ATTENTE: 'En attente',
+    ACCEPTE: 'Accepté',
+    LISTE_ATTENTE: "Liste d'attente",
+    REFUSE: 'Refusé',
+  };
+  const STATUS_BADGE = {
+    EN_ATTENTE: 'badge-neutral',
+    ACCEPTE: 'badge-success',
+    LISTE_ATTENTE: 'badge-warning',
+    REFUSE: 'badge-danger',
+  };
+
+  async function load() {
+    try {
+      const status = document.getElementById('status-filter').value;
+      const data = await api.get('/admin/wishes', { status: status || undefined, pageSize: 50 });
+      const rows = document.getElementById('rows');
+      document.getElementById('empty-msg').style.display = data.items.length ? 'none' : 'block';
+      rows.innerHTML = data.items
+        .map(
+          (w) => `
+        <tr>
+          <td>${w.student.firstName} ${w.student.lastName}<br><span class="text-sm text-muted">${w.student.email}</span></td>
+          <td>${w.student.ine || '—'}</td>
+          <td>${w.formation.name}</td>
+          <td>${w.formation.school.name}</td>
+          <td>${w.rank}</td>
+          <td><span class="badge ${STATUS_BADGE[w.status]}">${STATUS_LABELS[w.status]}</span></td>
+        </tr>`
+        )
+        .join('');
+    } catch (err) {
+      const box = document.getElementById('error-box');
+      box.textContent = err.message;
+      box.style.display = 'block';
+    }
+  }
+
+  document.getElementById('status-filter').addEventListener('change', load);
+  load();
+</script>
+</body>
+</html>
