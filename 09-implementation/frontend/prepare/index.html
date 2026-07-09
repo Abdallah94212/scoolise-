@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prepare — Tableau de bord | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .hero-prepare { background: var(--prepare-100); padding: 3rem 0; border-bottom: 1px solid var(--border-1); }
+  .stat-card strong { display:block; font-family: var(--font-heading); font-size: 2rem; color: var(--ink-900); }
+  .stat-card span { font-size: 0.85rem; color: var(--ink-500); }
+</style>
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Prepare</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a class="active" href="index.html">Tableau de bord</a>
+      <a href="referentiel.html">Référentiel</a>
+      <a href="ponderation.html">Pondération</a>
+      <a href="apercu.html">Aperçu candidat</a>
+      <a href="publication.html">Publication</a>
+    </nav>
+    <div class="topbar-actions">
+      <span class="badge badge-neutral">Camille Dupas · IUT de Bordeaux</span>
+    </div>
+  </div>
+</header>
+
+<section class="hero-prepare">
+  <div class="container">
+    <span class="badge badge-info">Espace formation</span>
+    <h1 class="mt-2">BUT Techniques de Commercialisation</h1>
+    <p class="text-muted mb-0">Campagne 2027 · Statut : <span class="badge badge-warning">Brouillon — non publié</span></p>
+  </div>
+</section>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="grid grid-3">
+      <div class="card stat-card"><strong>68 %</strong><span>Référentiel complété</span></div>
+      <div class="card stat-card"><strong>100 %</strong><span>Pondération répartie</span></div>
+      <div class="card stat-card"><strong>412</strong><span>Profils candidats simulés éligibles</span></div>
+    </div>
+
+    <div class="card section mt-3">
+      <h3>Prochaines étapes</h3>
+      <div class="stepper">
+        <span class="step done"><span class="step-num">✓</span> Créer le référentiel</span>
+        <span class="step current"><span class="step-num">2</span> Pondérer les critères</span>
+        <span class="step"><span class="step-num">3</span> Prévisualiser côté candidat</span>
+        <span class="step"><span class="step-num">4</span> Publier</span>
+      </div>
+      <a class="btn btn-primary" href="ponderation.html">Continuer — pondérer les critères →</a>
+    </div>
+
+    <div class="grid grid-2 mt-3">
+      <div class="card">
+        <h3>Ma commission d'examen des vœux</h3>
+        <p class="text-muted text-sm">4 membres invités à collaborer sur le référentiel.</p>
+        <ul class="text-sm" style="padding-left:1.2rem;">
+          <li>Camille Dupas (vous) — Responsable admissions</li>
+          <li>Marc Alaoui — Enseignant marketing</li>
+          <li>Sophie Nguyen — Enseignante gestion</li>
+          <li>Julien Perret — Directeur des études</li>
+        </ul>
+        <button class="btn btn-secondary btn-sm">+ Inviter un membre</button>
+      </div>
+      <div class="card">
+        <h3>Rappel légal</h3>
+        <p class="text-sm">L'article L. 612-3 du Code de l'éducation impose la publication des critères d'examen des vœux avant l'ouverture de la procédure nationale.</p>
+        <p class="text-sm mb-0">Prepare vous aide à être conforme automatiquement — voir <a href="../../../05-conformite-juridique/conformite-prepare.md">le détail des obligations</a>.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Prepare</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>

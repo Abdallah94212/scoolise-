@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Créer un compte — Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .auth-wrap { max-width: 480px; margin: 3rem auto; }
+  .field-ok { font-size: 0.82rem; color: var(--success); margin-top: 0.3rem; }
+</style>
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize</a>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container auth-wrap">
+    <div class="card section">
+      <h1>Créer un compte candidat</h1>
+      <p class="text-muted">Votre numéro INE (Identifiant National Étudiant) est requis, comme lors de l'inscription sur Parcoursup.</p>
+
+      <div id="form-error" class="alert alert-danger mb-3" style="display:none;"></div>
+
+      <form id="register-form" novalidate>
+        <div class="grid grid-2">
+          <div class="field" data-field="firstName">
+            <label for="firstName">Prénom</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <p class="field-error" data-error-for="firstName"></p>
+          </div>
+          <div class="field" data-field="lastName">
+            <label for="lastName">Nom</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <p class="field-error" data-error-for="lastName"></p>
+          </div>
+        </div>
+
+        <div class="field" data-field="email">
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" required>
+          <p class="field-error" data-error-for="email"></p>
+        </div>
+
+        <div class="field" data-field="ine">
+          <label for="ine">Numéro INE</label>
+          <input type="text" id="ine" name="ine" maxlength="11" placeholder="Ex : 123456789AB" required>
+          <p class="hint">11 caractères : 9 chiffres, puis un caractère alphanumérique, puis une lettre. Format vérifié uniquement (voir README, aucun registre INE public n'est consultable).</p>
+          <p class="field-ok" data-ine-ok style="display:none;">Format valide ✓</p>
+          <p class="field-error" data-error-for="ine"></p>
+        </div>
+
+        <div class="field" data-field="password">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" required>
+          <p class="hint">Au moins 8 caractères, avec une lettre et un chiffre.</p>
+          <p class="field-error" data-error-for="password"></p>
+        </div>
+
+        <div class="field" data-field="passwordConfirm">
+          <label for="passwordConfirm">Confirmer le mot de passe</label>
+          <input type="password" id="passwordConfirm" name="passwordConfirm" required>
+          <p class="field-error" data-error-for="passwordConfirm"></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Créer mon compte</button>
+      </form>
+
+      <p class="text-sm text-muted mt-3 mb-0">Déjà un compte ? <a href="login.html">Se connecter</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script>
+  const { api, auth, ApiError } = window.ScoolizeAPI;
+  const INE_REGEX = /^[0-9]{9}[0-9A-Z][A-Z]$/;
+
+  function clearErrors() {
+    document.querySelectorAll('.field').forEach((f) => f.classList.remove('has-error'));
+    document.querySelectorAll('[data-error-for]').forEach((e) => { e.textContent = ''; });
+    document.getElementById('form-error').style.display = 'none';
+  }
+
+  function showFieldError(field, message) {
+    const wrap = document.querySelector(`[data-field="${field}"]`);
+    const errorEl = document.querySelector(`[data-error-for="${field}"]`);
+    if (wrap) wrap.classList.add('has-error');
+    if (errorEl) errorEl.textContent = message;
+  }
+
+  function showFormError(message) {
+    const box = document.getElementById('form-error');
+    box.textContent = message;
+    box.style.display = 'block';
+  }
+
+  // Retour en direct sur le format INE, sans attendre la soumission du formulaire.
+  document.getElementById('ine').addEventListener('input', (e) => {
+    const value = e.target.value.toUpperCase();
+    e.target.value = value;
+    const okLabel = document.querySelector('[data-ine-ok]');
+    const errorEl = document.querySelector('[data-error-for="ine"]');
+    if (!value) {
+      okLabel.style.display = 'none';
+      errorEl.textContent = '';
+      return;
+    }
+    if (INE_REGEX.test(value)) {
+      okLabel.style.display = 'block';
+      errorEl.textContent = '';
+    } else {
+      okLabel.style.display = 'none';
+      errorEl.textContent = value.length >= 11
+        ? "Format invalide : 9 chiffres, un caractère alphanumérique, puis une lettre."
+        : `${value.length} / 11 caractères`;
+    }
+  });
+
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const ine = document.getElementById('ine').value.trim().toUpperCase();
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+    if (password !== passwordConfirm) {
+      showFieldError('passwordConfirm', 'Les deux mots de passe ne correspondent pas.');
+      return;
+    }
+
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Création en cours…';
+
+    try {
+      const { user, token } = await api.post('/auth/register', { firstName, lastName, email, ine, password });
+      auth.setSession(token, user);
+      window.location.href = '../predict/index.html';
+    } catch (err) {
+      if (err instanceof ApiError && err.errors.length) {
+        err.errors.forEach((fieldError) => showFieldError(fieldError.field, fieldError.message));
+      } else if (err instanceof ApiError) {
+        showFormError(err.message);
+      } else {
+        showFormError('Une erreur inattendue est survenue. Réessayez.');
+      }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Créer mon compte';
+    }
+  });
+</script>
+</body>
+</html>

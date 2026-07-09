@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pondération des critères — Prepare | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .weight-item { padding: 1.1rem 0; border-bottom: 1px solid var(--border-1); }
+  .weight-item:last-child { border-bottom: none; }
+  .weight-item-head { display:flex; justify-content:space-between; margin-bottom:0.5rem; }
+</style>
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Prepare</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Tableau de bord</a>
+      <a href="referentiel.html">Référentiel</a>
+      <a class="active" href="ponderation.html">Pondération</a>
+      <a href="apercu.html">Aperçu candidat</a>
+      <a href="publication.html">Publication</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container" style="max-width:760px;">
+    <div class="breadcrumb"><a href="index.html">Tableau de bord</a><span>/</span><span>Pondération</span></div>
+
+    <div class="stepper">
+      <span class="step done"><span class="step-num">✓</span> Créer le référentiel</span>
+      <span class="step current"><span class="step-num">2</span> Pondérer</span>
+      <span class="step"><span class="step-num">3</span> Prévisualiser</span>
+      <span class="step"><span class="step-num">4</span> Publier</span>
+    </div>
+
+    <h1>Pondérer les critères</h1>
+    <p class="text-muted">Répartissez 100 % entre vos 5 compétences retenues. Cette pondération est celle utilisée pour calculer le score affiché aux candidats sur Predict.</p>
+
+    <div class="card">
+      <div class="flex-between">
+        <h3 class="mb-0">Total réparti</h3>
+        <span id="weight-total-wrap" class="badge badge-success"><span id="weight-total">100 %</span></span>
+      </div>
+
+      <div class="weight-item mt-2">
+        <div class="weight-item-head"><strong>Résultats en mathématiques</strong></div>
+        <div class="range-row">
+          <input type="range" class="weight-slider" min="0" max="100" value="30">
+          <span class="range-value">30 %</span>
+        </div>
+      </div>
+
+      <div class="weight-item">
+        <div class="weight-item-head"><strong>Sciences économiques et sociales</strong></div>
+        <div class="range-row">
+          <input type="range" class="weight-slider" min="0" max="100" value="25">
+          <span class="range-value">25 %</span>
+        </div>
+      </div>
+
+      <div class="weight-item">
+        <div class="weight-item-head"><strong>Anglais</strong></div>
+        <div class="range-row">
+          <input type="range" class="weight-slider" min="0" max="100" value="15">
+          <span class="range-value">15 %</span>
+        </div>
+      </div>
+
+      <div class="weight-item">
+        <div class="weight-item-head"><strong>Autonomie &amp; méthode</strong></div>
+        <div class="range-row">
+          <input type="range" class="weight-slider" min="0" max="100" value="15">
+          <span class="range-value">15 %</span>
+        </div>
+      </div>
+
+      <div class="weight-item">
+        <div class="weight-item-head"><strong>Expérience pratique commerce/gestion</strong></div>
+        <div class="range-row">
+          <input type="range" class="weight-slider" min="0" max="100" value="15">
+          <span class="range-value">15 %</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warning mt-3">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <div>La pondération doit toujours totaliser 100 %. Le bouton de publication reste désactivé tant que ce n'est pas le cas.</div>
+    </div>
+
+    <div class="card mt-3">
+      <h3>Historique &amp; collaboration</h3>
+      <p class="text-sm text-muted mb-0">Dernière modification par <strong>Sophie Nguyen</strong>, il y a 2 jours — pondération accrue sur "Expérience pratique" suite à la réunion de commission du 14 novembre.</p>
+    </div>
+
+    <div class="flex-between mt-3">
+      <a class="btn btn-ghost" href="referentiel.html">← Retour</a>
+      <a class="btn btn-primary" href="apercu.html">Continuer — prévisualiser côté candidat →</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Prepare</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>

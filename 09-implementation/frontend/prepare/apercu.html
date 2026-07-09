@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aperçu candidat — Prepare | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .preview-frame { border: 3px solid var(--prepare-600); border-radius: var(--radius-lg); overflow: hidden; }
+  .preview-banner {
+    background: var(--prepare-600); color: #fff; padding: 0.6rem 1.25rem;
+    font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .criterion-row { padding: 1rem 0; border-bottom: 1px solid var(--border-1); }
+  .criterion-row:last-child { border-bottom: none; }
+  .criterion-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 1rem; }
+  .criterion-weight { font-size: 0.78rem; color: var(--ink-500); }
+</style>
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Prepare</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Tableau de bord</a>
+      <a href="referentiel.html">Référentiel</a>
+      <a href="ponderation.html">Pondération</a>
+      <a class="active" href="apercu.html">Aperçu candidat</a>
+      <a href="publication.html">Publication</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Tableau de bord</a><span>/</span><span>Aperçu candidat</span></div>
+
+    <div class="stepper">
+      <span class="step done"><span class="step-num">✓</span> Créer le référentiel</span>
+      <span class="step done"><span class="step-num">✓</span> Pondérer</span>
+      <span class="step current"><span class="step-num">3</span> Prévisualiser</span>
+      <span class="step"><span class="step-num">4</span> Publier</span>
+    </div>
+
+    <h1>Aperçu côté candidat</h1>
+    <p class="text-muted">Voici exactement ce que verra un candidat sur Predict — avec un profil de démonstration (Léa Martin) pour visualiser un exemple de score.</p>
+
+    <div class="preview-frame">
+      <div class="preview-banner">
+        <svg class="icon" viewBox="0 0 24 24" width="18" height="18"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+        Mode aperçu — vue exacte du candidat, non modifiable ici
+      </div>
+      <div style="background:var(--surface-0); padding:2rem;">
+        <div class="grid grid-sidebar-end">
+          <div>
+            <span class="badge badge-info">BUT · Économie &amp; gestion</span>
+            <h2 class="mt-2">BUT Techniques de Commercialisation</h2>
+            <p class="text-muted">IUT de Bordeaux · 24 places</p>
+
+            <div class="card section">
+              <h3>Détail du score de correspondance</h3>
+              <div class="criterion-row">
+                <div class="criterion-head"><strong>Résultats en mathématiques</strong><span class="criterion-weight">Poids 30 %</span></div>
+                <div class="progress"><span style="width:90%; background:var(--success);"></span></div>
+              </div>
+              <div class="criterion-row">
+                <div class="criterion-head"><strong>Sciences économiques et sociales</strong><span class="criterion-weight">Poids 25 %</span></div>
+                <div class="progress"><span style="width:85%; background:var(--success);"></span></div>
+              </div>
+              <div class="criterion-row">
+                <div class="criterion-head"><strong>Anglais</strong><span class="criterion-weight">Poids 15 %</span></div>
+                <div class="progress"><span style="width:55%; background:var(--warning);"></span></div>
+              </div>
+            </div>
+          </div>
+          <aside>
+            <div class="card" style="text-align:center;">
+              <div class="score-gauge" data-score="82" style="margin:0 auto; --accent-600:#0D9488;">
+                <div class="score-gauge-inner"><strong>82</strong><span>/ 100</span></div>
+              </div>
+              <p class="badge badge-success mt-2">Éligible</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info mt-3">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div>Ce que vous voyez ici est généré automatiquement à partir de votre référentiel et de votre pondération. Toute modification en semaine 2/3 se répercute immédiatement dans cet aperçu.</div>
+    </div>
+
+    <div class="flex-between mt-3">
+      <a class="btn btn-ghost" href="ponderation.html">← Retour</a>
+      <a class="btn btn-primary" href="publication.html">Continuer — publier →</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Prepare</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>

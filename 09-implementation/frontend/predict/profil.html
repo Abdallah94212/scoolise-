@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon profil de compétences — Predict | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .subject-row { display:flex; align-items:center; gap:1rem; padding:0.6rem 0; border-bottom:1px solid var(--border-1); }
+  .subject-row:last-child { border-bottom:none; }
+  .subject-name { flex:1; font-weight:600; color:var(--ink-900); }
+  .subject-note { font-family: var(--font-heading); font-weight:700; width:3.5rem; text-align:right; }
+  .skill-chip {
+    display:inline-flex; align-items:center; gap:0.4rem;
+    background:var(--surface-1); border:1px solid var(--border-1); border-radius:999px;
+    padding:0.4rem 0.8rem; font-size:0.85rem; margin:0.25rem 0.4rem 0.25rem 0;
+  }
+</style>
+</head>
+<body class="theme-predict">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Predict</span></a>
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Ouvrir le menu">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a class="active" href="profil.html">Mon profil</a>
+      <a href="recherche.html">Rechercher</a>
+      <a href="mes-voeux.html">Mes vœux <span class="count-pill" data-wishes-count>0</span></a>
+      <a href="comparateur.html">Comparateur <span class="count-pill" data-comparator-count>0</span></a>
+      <a href="lexique.html">Lexique</a>
+    </nav>
+    <div class="topbar-actions" data-auth-slot style="display:flex; gap:0.5rem; align-items:center;"></div>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span><span>Mon profil</span></div>
+
+    <div class="stepper">
+      <span class="step done"><span class="step-num">✓</span> Importer</span>
+      <span class="step current"><span class="step-num">2</span> Vérifier</span>
+      <span class="step"><span class="step-num">3</span> Compléter mon profil</span>
+    </div>
+
+    <div class="flex-between">
+      <div>
+        <h1 class="mb-0">Léa Martin — Terminale générale</h1>
+        <p class="text-muted">Spécialités : Mathématiques, Sciences économiques et sociales · Lycée import : bulletin_1er_trimestre.pdf</p>
+      </div>
+      <a class="btn btn-primary" href="recherche.html">Voir les formations qui me correspondent →</a>
+    </div>
+
+    <div class="grid grid-sidebar mt-3">
+      <aside>
+        <div class="tabs" style="flex-direction:column; border-bottom:none; border-left:2px solid var(--border-1); gap:0;">
+          <a class="active" href="#resultats">Résultats académiques</a>
+          <a href="#transversales">Compétences transversales</a>
+          <a href="#pratiques">Compétences pratiques</a>
+          <a href="#contexte">Mon contexte</a>
+        </div>
+        <div class="card mt-3">
+          <h4>Complétude du profil</h4>
+          <div class="progress"><span style="width:72%"></span></div>
+          <p class="text-sm text-muted mt-1 mb-0">72 % — ajoutez vos compétences pratiques pour affiner vos scores.</p>
+        </div>
+      </aside>
+
+      <div>
+        <section id="resultats" class="card section">
+          <h3>Résultats académiques <span class="badge badge-success">Importé automatiquement</span></h3>
+          <div class="subject-row"><span class="subject-name">Mathématiques (spécialité)</span><span class="subject-note" style="color:var(--success);">16.2</span></div>
+          <div class="subject-row"><span class="subject-name">Sciences économiques et sociales (spécialité)</span><span class="subject-note" style="color:var(--success);">15.4</span></div>
+          <div class="subject-row"><span class="subject-name">Français</span><span class="subject-note">13.8</span></div>
+          <div class="subject-row"><span class="subject-name">Histoire-Géographie</span><span class="subject-note">14.1</span></div>
+          <div class="subject-row"><span class="subject-name">Anglais LVA</span><span class="subject-note" style="color:var(--warning);">11.5</span></div>
+          <div class="subject-row"><span class="subject-name">Espagnol LVB</span><span class="subject-note">13.0</span></div>
+          <div class="subject-row"><span class="subject-name">Enseignement scientifique</span><span class="subject-note">12.9</span></div>
+          <p class="text-sm text-muted mt-2 mb-0">Une note vous semble incorrecte ? <a href="#">Corriger manuellement</a>.</p>
+        </section>
+
+        <section id="transversales" class="card section">
+          <h3>Compétences transversales</h3>
+          <p class="text-muted text-sm">Déduites des appréciations de votre bulletin — vous pouvez les ajuster.</p>
+          <div>
+            <span class="skill-chip">Autonomie — Niveau 4/5</span>
+            <span class="skill-chip">Esprit d'analyse — Niveau 4/5</span>
+            <span class="skill-chip">Expression écrite — Niveau 3/5</span>
+            <span class="skill-chip">Travail en équipe — Niveau 3/5</span>
+            <span class="skill-chip">+ Ajouter</span>
+          </div>
+        </section>
+
+        <section id="pratiques" class="card section">
+          <h3>Compétences pratiques <span class="badge badge-warning">À compléter</span></h3>
+          <p class="text-muted text-sm">Projets, stages, certifications : ce que votre bulletin ne montre pas.</p>
+          <div class="field">
+            <label for="proj">Ajouter une réalisation</label>
+            <input type="text" id="proj" placeholder="Ex : Stage d'observation en cabinet comptable, 1 semaine">
+            <p class="hint">Vous pourrez joindre un justificatif (attestation, certificat) à l'étape suivante.</p>
+          </div>
+          <button class="btn btn-secondary btn-sm">+ Ajouter une compétence pratique</button>
+        </section>
+
+        <section id="contexte" class="card section">
+          <h3>Mon contexte</h3>
+          <p class="text-muted text-sm">Utilisé uniquement pour vous montrer des profils similaires ayant réussi dans des filières où vous êtes peu représentée — jamais pour modifier votre score de correspondance.</p>
+          <div class="checkbox-row"><input type="checkbox" id="bours" checked><label for="bours" style="margin:0;">Boursier·ère</label></div>
+          <div class="field">
+            <label for="secteur">Zone géographique</label>
+            <select id="secteur"><option>Zone rurale</option><option>Zone urbaine</option><option>Quartier prioritaire</option></select>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Predict</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script>window.SCOOLIZE_BASE = '../';</script>
+<script src="../assets/js/nav-auth.js"></script>
+<script src="../assets/js/prototype.js"></script>
+</body>
+</html>

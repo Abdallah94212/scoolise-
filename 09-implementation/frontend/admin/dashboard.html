@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tableau de bord — Administration | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+  .stat-tile strong { display:block; font-family: var(--font-heading); font-size: 2.2rem; color: var(--ink-900); }
+  .stat-tile span { font-size: 0.85rem; color: var(--ink-500); }
+</style>
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Administration</span></a>
+    <div class="topbar-actions">
+      <span class="badge badge-neutral" id="admin-name">—</span>
+      <button class="btn btn-secondary btn-sm" id="logout-btn">Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <nav class="admin-nav">
+      <a class="active" href="dashboard.html">Tableau de bord</a>
+      <a href="utilisateurs.html">Utilisateurs</a>
+      <a href="ecoles.html">Écoles</a>
+      <a href="formations.html">Formations</a>
+      <a href="statistiques.html">Statistiques</a>
+      <a href="candidatures.html">Candidatures</a>
+    </nav>
+
+    <h1>Tableau de bord</h1>
+    <div id="error-box" class="alert alert-danger" style="display:none;"></div>
+
+    <div class="grid grid-3" id="tiles"></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Administration</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/admin-guard.js"></script>
+<script>
+  const { api, auth } = window.ScoolizeAPI;
+  document.getElementById('admin-name').textContent = `${auth.getUser().firstName} ${auth.getUser().lastName}`;
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    auth.clearSession();
+    window.location.href = '../auth/login.html';
+  });
+
+  const TILES = [
+    { key: 'totalStudents', label: 'Étudiants inscrits' },
+    { key: 'totalAdmins', label: 'Administrateurs' },
+    { key: 'totalSchools', label: 'Établissements' },
+    { key: 'totalFormations', label: 'Formations' },
+    { key: 'totalWishes', label: 'Vœux enregistrés' },
+  ];
+
+  async function load() {
+    try {
+      const data = await api.get('/admin/dashboard');
+      const tiles = document.getElementById('tiles');
+      tiles.innerHTML = TILES.map(
+        (t) => `<div class="card stat-tile"><strong>${data[t.key]}</strong><span>${t.label}</span></div>`
+      ).join('');
+    } catch (err) {
+      const box = document.getElementById('error-box');
+      box.textContent = `Impossible de charger le tableau de bord : ${err.message}`;
+      box.style.display = 'block';
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>

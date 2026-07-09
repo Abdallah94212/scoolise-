@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Écoles — Administration | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Administration</span></a>
+    <div class="topbar-actions">
+      <span class="badge badge-neutral" id="admin-name">—</span>
+      <button class="btn btn-secondary btn-sm" id="logout-btn">Déconnexion</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container">
+    <nav class="admin-nav">
+      <a href="dashboard.html">Tableau de bord</a>
+      <a href="utilisateurs.html">Utilisateurs</a>
+      <a class="active" href="ecoles.html">Écoles</a>
+      <a href="formations.html">Formations</a>
+      <a href="statistiques.html">Statistiques</a>
+      <a href="candidatures.html">Candidatures</a>
+    </nav>
+
+    <h1>Gestion des établissements</h1>
+    <div id="error-box" class="alert alert-danger" style="display:none;"></div>
+
+    <div class="card section">
+      <h3 id="form-title">Ajouter un établissement</h3>
+      <form id="school-form">
+        <input type="hidden" id="school-id">
+        <div class="grid grid-2">
+          <div class="field"><label for="name">Nom</label><input type="text" id="name" required></div>
+          <div class="field"><label for="city">Ville</label><input type="text" id="city" required></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="field"><label for="type">Type</label><input type="text" id="type" placeholder="IUT, Université, CPGE…" required></div>
+          <div class="field"><label for="website">Site web</label><input type="url" id="website" placeholder="https://…"></div>
+        </div>
+        <div class="field"><label for="description">Description</label><input type="text" id="description"></div>
+        <div class="flex gap-2">
+          <button type="submit" class="btn btn-primary" id="submit-btn">Ajouter</button>
+          <button type="button" class="btn btn-ghost" id="cancel-edit" style="display:none;">Annuler la modification</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="data-table-wrap mt-3">
+      <table class="data-table">
+        <thead><tr><th>Nom</th><th>Ville</th><th>Type</th><th>Actions</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Administration</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/admin-guard.js"></script>
+<script>
+  const { api, auth, ApiError } = window.ScoolizeAPI;
+  document.getElementById('admin-name').textContent = `${auth.getUser().firstName} ${auth.getUser().lastName}`;
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    auth.clearSession();
+    window.location.href = '../auth/login.html';
+  });
+
+  function showError(err) {
+    const box = document.getElementById('error-box');
+    box.textContent = err.message;
+    box.style.display = 'block';
+  }
+
+  function resetForm() {
+    document.getElementById('school-form').reset();
+    document.getElementById('school-id').value = '';
+    document.getElementById('form-title').textContent = 'Ajouter un établissement';
+    document.getElementById('submit-btn').textContent = 'Ajouter';
+    document.getElementById('cancel-edit').style.display = 'none';
+  }
+
+  async function load() {
+    try {
+      const data = await api.get('/schools', { pageSize: 50 });
+      const rows = document.getElementById('rows');
+      rows.innerHTML = data.items
+        .map(
+          (s) => `
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.city}</td>
+          <td>${s.type}</td>
+          <td>
+            <button class="btn btn-secondary btn-sm" data-edit='${JSON.stringify(s).replace(/'/g, '&#39;')}'>Modifier</button>
+            <button class="btn btn-ghost btn-sm" data-delete="${s.id}" style="color:var(--danger);">Supprimer</button>
+          </td>
+        </tr>`
+        )
+        .join('');
+
+      rows.querySelectorAll('[data-edit]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const s = JSON.parse(btn.dataset.edit);
+          document.getElementById('school-id').value = s.id;
+          document.getElementById('name').value = s.name;
+          document.getElementById('city').value = s.city;
+          document.getElementById('type').value = s.type;
+          document.getElementById('website').value = s.website || '';
+          document.getElementById('description').value = s.description || '';
+          document.getElementById('form-title').textContent = `Modifier « ${s.name} »`;
+          document.getElementById('submit-btn').textContent = 'Enregistrer les modifications';
+          document.getElementById('cancel-edit').style.display = '';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      rows.querySelectorAll('[data-delete]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Supprimer cet établissement et toutes ses formations ?')) return;
+          try {
+            await api.del(`/schools/${btn.dataset.delete}`);
+            load();
+          } catch (err) {
+            showError(err);
+          }
+        });
+      });
+    } catch (err) {
+      showError(err);
+    }
+  }
+
+  document.getElementById('cancel-edit').addEventListener('click', resetForm);
+
+  document.getElementById('school-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.getElementById('error-box').style.display = 'none';
+    const id = document.getElementById('school-id').value;
+    const payload = {
+      name: document.getElementById('name').value.trim(),
+      city: document.getElementById('city').value.trim(),
+      type: document.getElementById('type').value.trim(),
+      website: document.getElementById('website').value.trim() || undefined,
+      description: document.getElementById('description').value.trim() || undefined,
+    };
+    try {
+      if (id) {
+        await api.put(`/schools/${id}`, payload);
+      } else {
+        await api.post('/schools', payload);
+      }
+      resetForm();
+      load();
+    } catch (err) {
+      showError(err);
+    }
+  });
+
+  load();
+</script>
+</body>
+</html>
