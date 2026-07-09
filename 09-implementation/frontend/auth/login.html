@@ -25,8 +25,12 @@
       <h1>Se connecter</h1>
 
       <div id="form-error" class="alert alert-danger mb-3" style="display:none;"></div>
+      <div id="script-error" class="alert alert-danger mb-3" style="display:none;">
+        Le script <code>assets/js/api.js</code> n'a pas pu être chargé : le formulaire ne peut pas fonctionner.
+        Rechargez la page (Cmd/Ctrl + Maj + R) ou vérifiez qu'aucune extension de navigateur (bloqueur de scripts, antivirus) ne bloque les fichiers locaux.
+      </div>
 
-      <form id="login-form" novalidate>
+      <form id="login-form" novalidate onsubmit="return false;">
         <div class="field">
           <label for="email">Adresse email</label>
           <input type="email" id="email" name="email" required>
@@ -51,8 +55,12 @@
   </div>
 </footer>
 
-<script src="../assets/js/api.js"></script>
+<script src="../assets/js/api.js" onerror="document.getElementById('script-error').style.display='block';"></script>
 <script>
+  if (!window.ScoolizeAPI) {
+    document.getElementById('script-error').style.display = 'block';
+    throw new Error("assets/js/api.js n'a pas été chargé correctement — arrêt du script de la page.");
+  }
   const { api, auth, ApiError } = window.ScoolizeAPI;
 
   document.getElementById('login-form').addEventListener('submit', async (e) => {
