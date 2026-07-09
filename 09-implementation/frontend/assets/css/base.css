@@ -69,6 +69,8 @@ img { max-width: 100%; }
 }
 .topbar-inner {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.5rem;
@@ -106,7 +108,7 @@ img { max-width: 100%; }
   border-radius: 999px;
   margin-left: 0.4rem;
 }
-.nav { display: flex; gap: 1.5rem; align-items: center; }
+.nav { display: flex; flex-wrap: wrap; gap: 0.9rem 1.5rem; align-items: center; }
 .nav a {
   color: var(--ink-700);
   text-decoration: none;
