@@ -43,11 +43,22 @@ async function apiRequest(path, { method = 'GET', body, query } = {}) {
   const token = auth.getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(url, {
-    method,
-    headers,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  });
+  let res;
+  try {
+    res = await fetch(url, {
+      method,
+      headers,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+  } catch (networkErr) {
+    // fetch() rejette (sans réponse HTTP) en cas de serveur injoignable ou de
+    // blocage CORS — cas le plus fréquent : page ouverte en double-clic
+    // (file://) au lieu d'être servie sur http://localhost:8080.
+    throw new ApiError(
+      0,
+      `Impossible de contacter le serveur (${API_BASE}). Vérifiez que l'API est démarrée et que cette page est bien ouverte via http://localhost:8080 (et non ouverte directement depuis un fichier).`
+    );
+  }
 
   if (res.status === 204) return null;
 
