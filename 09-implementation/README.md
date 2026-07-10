@@ -70,7 +70,7 @@ de statistiques, un compte admin et un compte étudiant).
 |---|---|---|
 | Administrateur | `admin@scoolize.fr` | `Admin1234!` |
 | Étudiant (Léa Martin, INE `123456789AB`) | `lea.martin@lycee-demo.fr` | `Etudiant1234!` |
-| Personnel d'établissement — Prepare (Camille Dupas, IUT de Bordeaux) | `camille.dupas@iut-bordeaux.fr` | `Formation1234!` |
+| Personnel d'établissement — Prepare, IUT de Bordeaux (commission d'examen des vœux : Camille Dupas, Marc Alaoui, Sophie Nguyen, Julien Perret) | `camille.dupas@iut-bordeaux.fr` (ou `marc.alaoui@…`, `sophie.nguyen@…`, `julien.perret@…`) | `Formation1234!` (commun aux 4 comptes) |
 
 ## Lancer le backend en local sans Docker
 

@@ -60,17 +60,25 @@ async function main() {
   }
   const [iutBordeaux, uBordeaux, lyceeMontaigne, uLyon2, iutLyon1, insaToulouse] = schools;
 
-  console.log('Seed : compte personnel d\'établissement (Prepare)...');
-  await prisma.user.create({
-    data: {
-      email: 'camille.dupas@iut-bordeaux.fr',
-      passwordHash: staffPasswordHash,
-      role: 'SCHOOL_STAFF',
-      firstName: 'Camille',
-      lastName: 'Dupas',
-      schoolId: iutBordeaux.id,
-    },
-  });
+  console.log('Seed : commission d\'examen des vœux (Prepare, IUT de Bordeaux)...');
+  const commissionData = [
+    { email: 'camille.dupas@iut-bordeaux.fr', firstName: 'Camille', lastName: 'Dupas' },
+    { email: 'marc.alaoui@iut-bordeaux.fr', firstName: 'Marc', lastName: 'Alaoui' },
+    { email: 'sophie.nguyen@iut-bordeaux.fr', firstName: 'Sophie', lastName: 'Nguyen' },
+    { email: 'julien.perret@iut-bordeaux.fr', firstName: 'Julien', lastName: 'Perret' },
+  ];
+  for (const member of commissionData) {
+    await prisma.user.create({
+      data: {
+        email: member.email,
+        passwordHash: staffPasswordHash,
+        role: 'SCHOOL_STAFF',
+        firstName: member.firstName,
+        lastName: member.lastName,
+        schoolId: iutBordeaux.id,
+      },
+    });
+  }
 
   const formationsData = [
     { schoolId: iutBordeaux.id, name: 'BUT Techniques de Commercialisation', type: 'BUT', domain: 'Économie & gestion', capacity: 24, description: 'Formation en 3 ans au commerce et à la relation client.' },
@@ -117,9 +125,12 @@ async function main() {
   });
 
   console.log('Seed terminé.');
-  console.log('Compte admin              : admin@scoolize.fr / Admin1234!');
-  console.log('Compte étudiant           : lea.martin@lycee-demo.fr / Etudiant1234!');
-  console.log('Compte personnel Prepare  : camille.dupas@iut-bordeaux.fr / Formation1234! (IUT de Bordeaux)');
+  console.log('Compte admin                : admin@scoolize.fr / Admin1234!');
+  console.log('Compte étudiant             : lea.martin@lycee-demo.fr / Etudiant1234!');
+  console.log('Commission Prepare (IUT Bordeaux), mot de passe commun Formation1234! :');
+  for (const member of commissionData) {
+    console.log(`  - ${member.firstName} ${member.lastName.padEnd(8)} : ${member.email}`);
+  }
 }
 
 main()
