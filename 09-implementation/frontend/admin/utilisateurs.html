@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Utilisateurs — Administration | Scoolize</title>
-<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071002">
-<link rel="stylesheet" href="../assets/css/base.css?v=2026071002">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071003">
+<link rel="stylesheet" href="../assets/css/base.css?v=2026071003">
 </head>
 <body class="theme-prepare">
 <a class="skip-link" href="#main">Aller au contenu principal</a>
@@ -40,13 +40,14 @@
         <option value="">Tous les rôles</option>
         <option value="STUDENT">Étudiant</option>
         <option value="ADMIN">Administrateur</option>
+        <option value="SCHOOL_STAFF">Personnel d'établissement</option>
       </select>
     </div>
 
     <div class="data-table-wrap">
       <table class="data-table">
         <thead>
-          <tr><th>Nom</th><th>Email</th><th>INE</th><th>Rôle</th><th>Actions</th></tr>
+          <tr><th>Nom</th><th>Email</th><th>INE</th><th>Rôle</th><th>Établissement</th><th>Actions</th></tr>
         </thead>
         <tbody id="rows"></tbody>
       </table>
@@ -62,8 +63,8 @@
   </div>
 </footer>
 
-<script src="../assets/js/api.js?v=2026071002"></script>
-<script src="../assets/js/admin-guard.js?v=2026071002"></script>
+<script src="../assets/js/api.js?v=2026071003"></script>
+<script src="../assets/js/admin-guard.js?v=2026071003"></script>
 <script>
 (function () {
   const { api, auth } = window.ScoolizeAPI;
@@ -77,6 +78,14 @@
     const box = document.getElementById('error-box');
     box.textContent = err.message;
     box.style.display = 'block';
+  }
+
+  let schools = [];
+
+  function schoolOptions(selectedId) {
+    return schools
+      .map((s) => `<option value="${s.id}" ${s.id === selectedId ? 'selected' : ''}>${s.name}</option>`)
+      .join('');
   }
 
   async function load() {
@@ -97,6 +106,13 @@
             <select data-role-select="${u.id}">
               <option value="STUDENT" ${u.role === 'STUDENT' ? 'selected' : ''}>Étudiant</option>
               <option value="ADMIN" ${u.role === 'ADMIN' ? 'selected' : ''}>Administrateur</option>
+              <option value="SCHOOL_STAFF" ${u.role === 'SCHOOL_STAFF' ? 'selected' : ''}>Personnel d'établissement</option>
+            </select>
+          </td>
+          <td>
+            <select data-school-select="${u.id}" ${u.role === 'SCHOOL_STAFF' ? '' : 'disabled'} style="${u.role === 'SCHOOL_STAFF' ? '' : 'opacity:0.4;'}">
+              <option value="">— aucun —</option>
+              ${schoolOptions(u.school ? u.school.id : null)}
             </select>
           </td>
           <td>
@@ -107,12 +123,22 @@
         )
         .join('');
 
+      rows.querySelectorAll('[data-role-select]').forEach((select) => {
+        select.addEventListener('change', () => {
+          const schoolSelect = rows.querySelector(`[data-school-select="${select.dataset.roleSelect}"]`);
+          const isStaff = select.value === 'SCHOOL_STAFF';
+          schoolSelect.disabled = !isStaff;
+          schoolSelect.style.opacity = isStaff ? '1' : '0.4';
+        });
+      });
+
       rows.querySelectorAll('[data-save]').forEach((btn) => {
         btn.addEventListener('click', async () => {
           const id = btn.dataset.save;
           const role = rows.querySelector(`[data-role-select="${id}"]`).value;
+          const schoolId = rows.querySelector(`[data-school-select="${id}"]`).value || null;
           try {
-            await api.put(`/admin/users/${id}`, { role });
+            await api.put(`/admin/users/${id}`, { role, schoolId });
             load();
           } catch (err) {
             showError(err);
@@ -138,7 +164,16 @@
 
   document.getElementById('q').addEventListener('input', load);
   document.getElementById('role-filter').addEventListener('change', load);
-  load();
+
+  (async () => {
+    try {
+      const schoolsData = await api.get('/schools', { pageSize: 100 });
+      schools = schoolsData.items;
+    } catch (err) {
+      showError(err);
+    }
+    load();
+  })();
 })();
 </script>
 </body>

@@ -80,7 +80,7 @@ router.get('/:id/stats', statsController.listByFormation);
  * /formations/{id}/stats:
  *   post:
  *     tags: [Statistiques]
- *     summary: Créer ou mettre à jour les statistiques d'une année (administrateur) — le taux d'accès est calculé automatiquement
+ *     summary: Créer ou mettre à jour les statistiques d'une année (administrateur ou personnel de l'établissement) — le taux d'accès est calculé automatiquement
  *     parameters:
  *       - in: path
  *         name: id
@@ -103,14 +103,14 @@ router.get('/:id/stats', statsController.listByFormation);
  *       403: { description: Réservé aux administrateurs }
  *       404: { description: Formation introuvable }
  */
-router.post('/:id/stats', requireAuth, requireRole('ADMIN'), validate(upsertStatSchema), statsController.upsert);
+router.post('/:id/stats', requireAuth, requireRole('ADMIN', 'SCHOOL_STAFF'), validate(upsertStatSchema), statsController.upsert);
 
 /**
  * @openapi
  * /formations:
  *   post:
  *     tags: [Formations]
- *     summary: Créer une formation (administrateur)
+ *     summary: Créer une formation (administrateur ou personnel de l'établissement)
  *     requestBody:
  *       required: true
  *       content:
@@ -129,14 +129,14 @@ router.post('/:id/stats', requireAuth, requireRole('ADMIN'), validate(upsertStat
  *       201: { description: Formation créée }
  *       403: { description: Réservé aux administrateurs }
  */
-router.post('/', requireAuth, requireRole('ADMIN'), validate(createFormationSchema), controller.create);
+router.post('/', requireAuth, requireRole('ADMIN', 'SCHOOL_STAFF'), validate(createFormationSchema), controller.create);
 
 /**
  * @openapi
  * /formations/{id}:
  *   put:
  *     tags: [Formations]
- *     summary: Modifier une formation (administrateur)
+ *     summary: Modifier une formation (administrateur ou personnel de l'établissement)
  *     parameters:
  *       - in: path
  *         name: id
@@ -147,14 +147,14 @@ router.post('/', requireAuth, requireRole('ADMIN'), validate(createFormationSche
  *       403: { description: Réservé aux administrateurs }
  *       404: { description: Introuvable }
  */
-router.put('/:id', requireAuth, requireRole('ADMIN'), validate(updateFormationSchema), controller.update);
+router.put('/:id', requireAuth, requireRole('ADMIN', 'SCHOOL_STAFF'), validate(updateFormationSchema), controller.update);
 
 /**
  * @openapi
  * /formations/{id}:
  *   delete:
  *     tags: [Formations]
- *     summary: Supprimer une formation (administrateur)
+ *     summary: Supprimer une formation (administrateur ou personnel de l'établissement)
  *     parameters:
  *       - in: path
  *         name: id
@@ -165,6 +165,6 @@ router.put('/:id', requireAuth, requireRole('ADMIN'), validate(updateFormationSc
  *       403: { description: Réservé aux administrateurs }
  *       404: { description: Introuvable }
  */
-router.delete('/:id', requireAuth, requireRole('ADMIN'), controller.remove);
+router.delete('/:id', requireAuth, requireRole('ADMIN', 'SCHOOL_STAFF'), controller.remove);
 
 module.exports = router;

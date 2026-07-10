@@ -26,6 +26,7 @@
     },
     isAuthenticated: () => !!localStorage.getItem(TOKEN_KEY),
     isAdmin: () => auth.getUser()?.role === 'ADMIN',
+    isSchoolStaff: () => auth.getUser()?.role === 'SCHOOL_STAFF',
   };
 
   class ApiError extends Error {

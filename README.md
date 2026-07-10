@@ -22,7 +22,7 @@ Réponse d'**EPI'Gency Digital** à l'appel d'offres du Ministère de l'Éducati
 | [`06-conduite-du-changement/`](06-conduite-du-changement/) | Plan d'accompagnement des deux publics (formations / candidats) | 3 |
 | [`07-gestion-de-projet/`](07-gestion-de-projet/) | Planning, rôles (RACI), outils, versioning, sources de données | Transverse |
 | [`08-soutenance/`](08-soutenance/) | Support de présentation et script | 3 |
-| [`09-implementation/`](09-implementation/) | **Backend Node/Express + PostgreSQL, API REST documentée (Swagger), authentification JWT, 97 tests automatisés, frontend connecté** | 4 (post-jury) |
+| [`09-implementation/`](09-implementation/) | **Backend Node/Express + PostgreSQL, API REST documentée (Swagger), authentification JWT (3 rôles), 113 tests automatisés, frontend connecté** | 4 (post-jury) |
 
 ## Technologies réellement utilisées (`09-implementation/`)
 
@@ -33,7 +33,7 @@ Réponse d'**EPI'Gency Digital** à l'appel d'offres du Ministère de l'Éducati
 - **JWT (jsonwebtoken) + bcrypt** — authentification par jeton signé et hachage des mots de passe.
 - **Zod** — validation des données entrantes avec messages d'erreur par champ.
 - **Swagger (swagger-jsdoc + swagger-ui-express)** — documentation interactive de l'API (`/api/docs`).
-- **Jest + Supertest** — 97 tests automatisés exécutés contre une vraie base PostgreSQL de test.
+- **Jest + Supertest** — 113 tests automatisés exécutés contre une vraie base PostgreSQL de test.
 
 **Frontend**
 - **HTML / CSS / JS natif**, sans framework — même design system que le prototype maquettes (`tokens.css`, `base.css`).
@@ -83,7 +83,7 @@ Scoolize ne remplace pas Parcoursup : il **structure et rend lisible** ce qui re
 
 **Livré (semaines 1-3, maquettes) :** recherche UX complète, vision produit argumentée, wireframes puis prototype haute-fidélité cliquable et responsive pour l'intégralité des parcours prioritaires, conformité légale/RGPD documentée, plan de conduite du changement, méthode de gestion de projet.
 
-**Livré depuis (implémentation full-stack, dossier `09-implementation/`)** en réponse aux remarques du jury sur l'absence de backend : API REST Node/Express documentée (Swagger), base de données PostgreSQL réelle (Prisma, migrations), authentification JWT avec rôles Étudiant/Administrateur, CRUD écoles/formations, validation du numéro INE, calcul automatique des taux d'accès sur 5 ans, écran administrateur complet, gestion des vœux — 97 tests automatisés contre une vraie base de test. Voir [`09-implementation/README.md`](09-implementation/README.md) pour le détail et les limites assumées.
+**Livré depuis (implémentation full-stack, dossier `09-implementation/`)** en réponse aux remarques du jury sur l'absence de backend : API REST Node/Express documentée (Swagger), base de données PostgreSQL réelle (Prisma, migrations), authentification JWT avec 3 rôles (Étudiant, Personnel d'établissement, Administrateur), CRUD écoles/formations, validation du numéro INE, calcul automatique des taux d'accès sur 5 ans, écran administrateur complet, gestion des vœux — 113 tests automatisés contre une vraie base de test. Voir [`09-implementation/README.md`](09-implementation/README.md) pour le détail et les limites assumées.
 
 **Volontairement hors périmètre à ce stade :** le référentiel de compétences pondéré de Prepare (constructeur, pondération, aperçu candidat) reste un mockup statique — non demandé par le jury, priorité donnée au socle Parcoursup exigé.
 

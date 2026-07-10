@@ -18,9 +18,13 @@ async function listByFormation(formationId) {
   });
 }
 
-async function upsert(formationId, { year, nbVoeux, nbPropositions, nbAdmis }) {
+async function upsert(formationId, { year, nbVoeux, nbPropositions, nbAdmis }, actingUser) {
   const formation = await prisma.formation.findUnique({ where: { id: formationId } });
   if (!formation) throw AppError.notFound('Formation introuvable.');
+
+  if (actingUser.role === 'SCHOOL_STAFF' && actingUser.schoolId !== formation.schoolId) {
+    throw AppError.forbidden('Vous ne pouvez gérer que les statistiques de votre propre établissement.');
+  }
 
   if (nbAdmis > nbVoeux) {
     throw AppError.badRequest("Le nombre d'admis ne peut pas dépasser le nombre de vœux.", [

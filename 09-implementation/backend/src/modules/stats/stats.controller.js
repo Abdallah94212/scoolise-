@@ -10,7 +10,7 @@ async function listByFormation(req, res, next) {
 
 async function upsert(req, res, next) {
   try {
-    res.status(201).json(await statsService.upsert(req.params.id, req.body));
+    res.status(201).json(await statsService.upsert(req.params.id, req.body, req.user));
   } catch (err) {
     next(err);
   }

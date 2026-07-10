@@ -34,8 +34,11 @@ async function create(data) {
   return prisma.school.create({ data: normalize(data) });
 }
 
-async function update(id, data) {
+async function update(id, data, actingUser) {
   await getById(id);
+  if (actingUser.role === 'SCHOOL_STAFF' && actingUser.schoolId !== id) {
+    throw AppError.forbidden('Vous ne pouvez modifier que votre propre établissement.');
+  }
   return prisma.school.update({ where: { id }, data: normalize(data) });
 }
 

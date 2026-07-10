@@ -3,26 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Se connecter — Scoolize</title>
+<title>Connexion établissement — Prepare | Scoolize</title>
 <link rel="stylesheet" href="../assets/css/tokens.css?v=2026071003">
 <link rel="stylesheet" href="../assets/css/base.css?v=2026071003">
 <style>
   .auth-wrap { max-width: 420px; margin: 4rem auto; }
 </style>
 </head>
-<body class="theme-predict">
+<body class="theme-prepare">
 <a class="skip-link" href="#main">Aller au contenu principal</a>
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize</a>
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Prepare</span></a>
   </div>
 </header>
 
 <main id="main" class="main">
   <div class="container auth-wrap">
     <div class="card section">
-      <h1>Se connecter</h1>
+      <span class="badge badge-info mb-2">Espace formation</span>
+      <h1>Connexion établissement</h1>
+      <p class="text-muted text-sm">Réservé au personnel des établissements (responsables admissions). Les candidats doivent utiliser <a href="login.html">l'espace Predict</a>.</p>
 
       <div id="form-error" class="alert alert-danger mb-3" style="display:none;"></div>
       <div id="script-error" class="alert alert-danger mb-3" style="display:none;">
@@ -42,21 +44,15 @@
         <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Se connecter</button>
       </form>
 
-      <p class="text-sm text-muted mt-3 mb-0">Pas encore de compte ? <a href="register.html">Créer un compte candidat</a></p>
-      <p class="text-sm text-muted mb-0">Comptes de démonstration : <code>admin@scoolize.fr</code> / <code>Admin1234!</code> (admin) ou <code>lea.martin@lycee-demo.fr</code> / <code>Etudiant1234!</code> (étudiant).</p>
-    </div>
-
-    <div class="card mt-3" style="background:#0F172A;">
-      <h3 style="color:#fff;">Journal de diagnostic (temporaire)</h3>
-      <p class="text-sm" style="color:#94A3B8;">Ce bloc affiche en direct chaque étape de la connexion — utile pour identifier précisément où ça bloque.</p>
-      <pre id="debug-log" style="color:#4ADE80; font-size:0.8rem; white-space:pre-wrap; margin:0;">(en attente d'une tentative de connexion...)</pre>
+      <p class="text-sm text-muted mt-3 mb-0">Compte de démonstration : <code>camille.dupas@iut-bordeaux.fr</code> / <code>Formation1234!</code> (IUT de Bordeaux).</p>
+      <p class="text-sm text-muted mb-0">Les comptes établissement sont créés par un administrateur, pas d'auto-inscription ici.</p>
     </div>
   </div>
 </main>
 
 <footer class="site-footer">
   <div class="container flex-between">
-    <span>Scoolize</span>
+    <span>Scoolize — Prepare</span>
     <a href="../index.html">← Retour au portail</a>
   </div>
 </footer>
@@ -70,54 +66,27 @@
   }
   const { api, auth, ApiError } = window.ScoolizeAPI;
 
-  const debugLog = document.getElementById('debug-log');
-  function log(msg) {
-    const time = new Date().toLocaleTimeString('fr-FR');
-    debugLog.textContent += `\n[${time}] ${msg}`;
-  }
-  log('Script de la page chargé, formulaire prêt.');
-
-  // Avertit si la page est sur le point d'être quittée (navigation) pendant
-  // le traitement — permet de confirmer si un rechargement intempestif a lieu.
-  window.addEventListener('beforeunload', () => {
-    try { sessionStorage.setItem('scoolize_debug_last', debugLog.textContent); } catch (e) {}
-  });
-  const previousLog = (() => { try { return sessionStorage.getItem('scoolize_debug_last'); } catch (e) { return null; } })();
-  if (previousLog) {
-    log('--- Journal de la tentative précédente (avant un rechargement de page) ---');
-    debugLog.textContent += '\n' + previousLog;
-    log('--- Fin du journal précédent ---');
-    try { sessionStorage.removeItem('scoolize_debug_last'); } catch (e) {}
-  }
-
   document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    log('Soumission interceptée par le JavaScript (pas de rechargement natif).');
     const errorBox = document.getElementById('form-error');
     errorBox.style.display = 'none';
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
-    log(`Tentative de connexion pour : ${email} (mot de passe de ${password.length} caractères saisi).`);
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Connexion…';
 
     try {
-      log(`Envoi de la requête à ${api.get ? '' : ''}POST /auth/login…`);
       const { user, token } = await api.post('/auth/login', { email, password });
-      log(`Réponse reçue avec succès. Utilisateur : ${user.email}, rôle : ${user.role}.`);
+      if (user.role !== 'SCHOOL_STAFF') {
+        errorBox.textContent = "Ce compte n'est pas un compte établissement. Utilisez la page de connexion appropriée.";
+        errorBox.style.display = 'block';
+        return;
+      }
       auth.setSession(token, user);
-      const savedBack = localStorage.getItem('scoolize_token');
-      log(`Session enregistrée dans localStorage : ${savedBack ? 'OK (jeton relu avec succès)' : 'ÉCHEC (jeton absent après écriture !)'}.`);
-      const dest =
-        user.role === 'ADMIN' ? '../admin/dashboard.html' :
-        user.role === 'SCHOOL_STAFF' ? '../prepare/index.html' :
-        '../predict/index.html';
-      log(`Redirection vers ${dest}…`);
-      window.location.href = dest;
+      window.location.href = '../prepare/index.html';
     } catch (err) {
-      log(`ERREUR : ${err && err.message ? err.message : err}`);
       errorBox.textContent = err instanceof ApiError ? err.message : 'Une erreur inattendue est survenue.';
       errorBox.style.display = 'block';
     } finally {

@@ -22,14 +22,15 @@ async function main() {
   console.log('Seed : comptes de démonstration...');
   const adminPasswordHash = await bcrypt.hash('Admin1234!', 10);
   const studentPasswordHash = await bcrypt.hash('Etudiant1234!', 10);
+  const staffPasswordHash = await bcrypt.hash('Formation1234!', 10);
 
   await prisma.user.create({
     data: {
       email: 'admin@scoolize.fr',
       passwordHash: adminPasswordHash,
       role: 'ADMIN',
-      firstName: 'Camille',
-      lastName: 'Dupas',
+      firstName: 'Admin',
+      lastName: 'Scoolize',
     },
   });
 
@@ -58,6 +59,18 @@ async function main() {
     schools.push(await prisma.school.create({ data }));
   }
   const [iutBordeaux, uBordeaux, lyceeMontaigne, uLyon2, iutLyon1, insaToulouse] = schools;
+
+  console.log('Seed : compte personnel d\'établissement (Prepare)...');
+  await prisma.user.create({
+    data: {
+      email: 'camille.dupas@iut-bordeaux.fr',
+      passwordHash: staffPasswordHash,
+      role: 'SCHOOL_STAFF',
+      firstName: 'Camille',
+      lastName: 'Dupas',
+      schoolId: iutBordeaux.id,
+    },
+  });
 
   const formationsData = [
     { schoolId: iutBordeaux.id, name: 'BUT Techniques de Commercialisation', type: 'BUT', domain: 'Économie & gestion', capacity: 24, description: 'Formation en 3 ans au commerce et à la relation client.' },
@@ -104,8 +117,9 @@ async function main() {
   });
 
   console.log('Seed terminé.');
-  console.log('Compte admin   : admin@scoolize.fr / Admin1234!');
-  console.log('Compte étudiant: lea.martin@lycee-demo.fr / Etudiant1234!');
+  console.log('Compte admin              : admin@scoolize.fr / Admin1234!');
+  console.log('Compte étudiant           : lea.martin@lycee-demo.fr / Etudiant1234!');
+  console.log('Compte personnel Prepare  : camille.dupas@iut-bordeaux.fr / Formation1234! (IUT de Bordeaux)');
 }
 
 main()

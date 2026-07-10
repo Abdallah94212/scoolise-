@@ -19,6 +19,7 @@ async function createUser({ role = 'STUDENT', email, password = 'Password1', ...
       firstName: rest.firstName || 'Test',
       lastName: rest.lastName || 'User',
       ine: role === 'STUDENT' ? rest.ine || nextIne() : undefined,
+      schoolId: rest.schoolId || undefined,
     },
   });
   return { user, token: signToken(user), password };
@@ -32,4 +33,8 @@ async function createStudent(overrides = {}) {
   return createUser({ role: 'STUDENT', ...overrides });
 }
 
-module.exports = { createUser, createAdmin, createStudent, nextIne };
+async function createSchoolStaff(schoolId, overrides = {}) {
+  return createUser({ role: 'SCHOOL_STAFF', schoolId, ...overrides });
+}
+
+module.exports = { createUser, createAdmin, createStudent, createSchoolStaff, nextIne };

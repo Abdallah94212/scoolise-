@@ -10,6 +10,7 @@ datasource db {
 enum Role {
   STUDENT
   ADMIN
+  SCHOOL_STAFF
 }
 
 enum WishStatus {
@@ -30,6 +31,13 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  // Uniquement renseigné pour un compte SCHOOL_STAFF : l'établissement dont
+  // il/elle est responsable. Un ADMIN gère toutes les écoles (schoolId reste
+  // null) ; un SCHOOL_STAFF ne peut gérer que les formations/statistiques de
+  // son propre établissement (voir middlewares/school-staff.middleware.js).
+  schoolId String?
+  school   School? @relation(fields: [schoolId], references: [id], onDelete: SetNull)
+
   wishes Wish[]
 
   @@map("users")
@@ -46,6 +54,7 @@ model School {
   updatedAt   DateTime @updatedAt
 
   formations Formation[]
+  staff      User[]
 
   @@map("schools")
 }

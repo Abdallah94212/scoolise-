@@ -46,7 +46,10 @@ async function register({ email, password, firstName, lastName, ine }) {
 
 async function login({ email, password }) {
   const normalizedEmail = email.toLowerCase().trim();
-  const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+  const user = await prisma.user.findUnique({
+    where: { email: normalizedEmail },
+    include: { school: { select: { id: true, name: true, city: true } } },
+  });
   if (!user) {
     throw AppError.unauthorized('Email ou mot de passe incorrect.');
   }

@@ -34,7 +34,7 @@ router.get('/dashboard', controller.dashboard);
  *         schema: { type: string }
  *       - in: query
  *         name: role
- *         schema: { type: string, enum: [STUDENT, ADMIN] }
+ *         schema: { type: string, enum: [STUDENT, ADMIN, SCHOOL_STAFF] }
  *     responses:
  *       200: { description: Liste paginée des utilisateurs }
  */

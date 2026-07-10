@@ -17,7 +17,10 @@ async function requireAuth(req, res, next) {
       throw AppError.unauthorized('Jeton d\'authentification invalide ou expiré.');
     }
 
-    const user = await prisma.user.findUnique({ where: { id: payload.sub } });
+    const user = await prisma.user.findUnique({
+      where: { id: payload.sub },
+      include: { school: { select: { id: true, name: true, city: true } } },
+    });
     if (!user) {
       throw AppError.unauthorized('Utilisateur introuvable.');
     }
