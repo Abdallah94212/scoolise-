@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Connexion directe (diagnostic) — Scoolize</title>
+</head>
+<body style="font-family: sans-serif; padding: 3rem; max-width: 600px; margin: 0 auto;">
+  <h1 id="title">Connexion en cours…</h1>
+  <p id="status">Si ce texte ne change pas au bout de 2 secondes, JavaScript ne s'exécute pas dans ce navigateur (ou sur cette page) — c'est la cause du problème rencontré sur les autres pages.</p>
+  <p><a href="../index.html">Retour au portail</a> — <a href="login.html">Page de connexion normale</a></p>
+
+  <script>
+    document.getElementById('title').textContent = 'JavaScript fonctionne ✓ — connexion en cours…';
+    document.getElementById('status').textContent = 'Redirection dans un instant…';
+
+    localStorage.setItem('scoolize_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjODZjYzkwYy0xZDBkLTQyOGYtYTBkMy00YjQ0MzYyOWYzYzciLCJyb2xlIjoiU1RVREVOVCIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaWF0IjoxNzgzNjM4OTI1LCJleHAiOjE3ODM2NDYxMjV9.76SG81yn1CAuJZEJTS4g_0rglIfwOeNzBg8EB7kfnpo');
+    localStorage.setItem('scoolize_user', JSON.stringify({
+      id: 'c86cc90c-1d0d-428f-a0d3-4b443629f3c7',
+      email: 'admin@admin.com',
+      role: 'ADMIN',
+      firstName: 'Admin',
+      lastName: 'Test'
+    }));
+
+    setTimeout(() => {
+      window.location.href = '../admin/dashboard.html';
+    }, 800);
+  </script>
+</body>
+</html>

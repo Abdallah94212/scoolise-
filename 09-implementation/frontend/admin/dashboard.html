@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tableau de bord — Administration | Scoolize</title>
-<link rel="stylesheet" href="../assets/css/tokens.css">
-<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071002">
+<link rel="stylesheet" href="../assets/css/base.css?v=2026071002">
 <style>
   .stat-tile strong { display:block; font-family: var(--font-heading); font-size: 2.2rem; color: var(--ink-900); }
   .stat-tile span { font-size: 0.85rem; color: var(--ink-500); }
@@ -49,8 +49,8 @@
   </div>
 </footer>
 
-<script src="../assets/js/api.js"></script>
-<script src="../assets/js/admin-guard.js"></script>
+<script src="../assets/js/api.js?v=2026071002"></script>
+<script src="../assets/js/admin-guard.js?v=2026071002"></script>
 <script>
   const { api, auth } = window.ScoolizeAPI;
   document.getElementById('admin-name').textContent = `${auth.getUser().firstName} ${auth.getUser().lastName}`;
