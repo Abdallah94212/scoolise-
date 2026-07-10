@@ -90,6 +90,7 @@
 
 <script src="../assets/js/api.js?v=2026071002" onerror="document.getElementById('script-error').style.display='block';"></script>
 <script>
+(function () {
   if (!window.ScoolizeAPI) {
     document.getElementById('script-error').style.display = 'block';
     throw new Error("assets/js/api.js n'a pas été chargé correctement — arrêt du script de la page.");
@@ -175,6 +176,7 @@
       submitBtn.textContent = 'Créer mon compte';
     }
   });
+})();
 </script>
 </body>
 </html>

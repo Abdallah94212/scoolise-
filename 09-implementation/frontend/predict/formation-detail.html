@@ -158,6 +158,7 @@
 <script src="../assets/js/nav-auth.js?v=2026071002"></script>
 <script src="../assets/js/prototype.js?v=2026071002"></script>
 <script>
+(function () {
   if (!window.ScoolizeAPI) {
     document.getElementById('script-error').style.display = 'block';
     throw new Error("assets/js/api.js n'a pas été chargé correctement — arrêt du script de la page.");
@@ -304,6 +305,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', loadFormation, { once: true });
+})();
 </script>
 </body>
 </html>
