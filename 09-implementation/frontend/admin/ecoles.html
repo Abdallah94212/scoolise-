@@ -73,6 +73,7 @@
 <script src="../assets/js/api.js?v=2026071002"></script>
 <script src="../assets/js/admin-guard.js?v=2026071002"></script>
 <script>
+(function () {
   const { api, auth, ApiError } = window.ScoolizeAPI;
   document.getElementById('admin-name').textContent = `${auth.getUser().firstName} ${auth.getUser().lastName}`;
   document.getElementById('logout-btn').addEventListener('click', () => {
@@ -172,6 +173,7 @@
   });
 
   load();
+})();
 </script>
 </body>
 </html>
