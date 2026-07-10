@@ -112,7 +112,7 @@ router.post('/', requireAuth, requireRole('ADMIN'), validate(createSchoolSchema)
  *       403: { description: Réservé aux administrateurs }
  *       404: { description: Introuvable }
  */
-router.put('/:id', requireAuth, requireRole('ADMIN'), validate(updateSchoolSchema), controller.update);
+router.put('/:id', requireAuth, requireRole('ADMIN', 'SCHOOL_STAFF'), validate(updateSchoolSchema), controller.update);
 
 /**
  * @openapi

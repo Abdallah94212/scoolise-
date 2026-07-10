@@ -43,20 +43,34 @@ async function assertSchoolExists(schoolId) {
   }
 }
 
-async function create(data) {
+// Un ADMIN gère toutes les écoles ; un SCHOOL_STAFF ne peut gérer que les
+// formations de son propre établissement (schoolId associé à son compte).
+function assertOwnership(actingUser, schoolId) {
+  if (actingUser.role === 'SCHOOL_STAFF' && actingUser.schoolId !== schoolId) {
+    throw AppError.forbidden('Vous ne pouvez gérer que les formations de votre propre établissement.');
+  }
+}
+
+async function create(data, actingUser) {
   await assertSchoolExists(data.schoolId);
+  assertOwnership(actingUser, data.schoolId);
   return prisma.formation.create({ data, include: includeSchool });
 }
 
-async function update(id, data) {
-  await getById(id);
-  if (data.schoolId) await assertSchoolExists(data.schoolId);
+async function update(id, data, actingUser) {
+  const existing = await getById(id);
+  assertOwnership(actingUser, existing.schoolId);
+  if (data.schoolId) {
+    await assertSchoolExists(data.schoolId);
+    assertOwnership(actingUser, data.schoolId);
+  }
   return prisma.formation.update({ where: { id }, data, include: includeSchool });
 }
 
-async function remove(id) {
-  await getById(id);
+async function remove(id, actingUser) {
+  const existing = await getById(id);
+  assertOwnership(actingUser, existing.schoolId);
   await prisma.formation.delete({ where: { id } });
 }
 
-module.exports = { list, getById, create, update, remove };
+module.exports = { list, getById, create, update, remove, assertOwnership };

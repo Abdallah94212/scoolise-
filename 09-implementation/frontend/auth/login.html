@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Se connecter — Scoolize</title>
-<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071002">
-<link rel="stylesheet" href="../assets/css/base.css?v=2026071002">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071003">
+<link rel="stylesheet" href="../assets/css/base.css?v=2026071003">
 <style>
   .auth-wrap { max-width: 420px; margin: 4rem auto; }
 </style>
@@ -61,7 +61,7 @@
   </div>
 </footer>
 
-<script src="../assets/js/api.js?v=2026071002" onerror="document.getElementById('script-error').style.display='block';"></script>
+<script src="../assets/js/api.js?v=2026071003" onerror="document.getElementById('script-error').style.display='block';"></script>
 <script>
 (function () {
   if (!window.ScoolizeAPI) {
@@ -110,7 +110,10 @@
       auth.setSession(token, user);
       const savedBack = localStorage.getItem('scoolize_token');
       log(`Session enregistrée dans localStorage : ${savedBack ? 'OK (jeton relu avec succès)' : 'ÉCHEC (jeton absent après écriture !)'}.`);
-      const dest = user.role === 'ADMIN' ? '../admin/dashboard.html' : '../predict/index.html';
+      const dest =
+        user.role === 'ADMIN' ? '../admin/dashboard.html' :
+        user.role === 'SCHOOL_STAFF' ? '../prepare/index.html' :
+        '../predict/index.html';
       log(`Redirection vers ${dest}…`);
       window.location.href = dest;
     } catch (err) {

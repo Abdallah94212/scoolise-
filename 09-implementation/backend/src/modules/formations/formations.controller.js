@@ -18,7 +18,7 @@ async function getById(req, res, next) {
 
 async function create(req, res, next) {
   try {
-    res.status(201).json(await formationsService.create(req.body));
+    res.status(201).json(await formationsService.create(req.body, req.user));
   } catch (err) {
     next(err);
   }
@@ -26,7 +26,7 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    res.json(await formationsService.update(req.params.id, req.body));
+    res.json(await formationsService.update(req.params.id, req.body, req.user));
   } catch (err) {
     next(err);
   }
@@ -34,7 +34,7 @@ async function update(req, res, next) {
 
 async function remove(req, res, next) {
   try {
-    await formationsService.remove(req.params.id);
+    await formationsService.remove(req.params.id, req.user);
     res.status(204).send();
   } catch (err) {
     next(err);

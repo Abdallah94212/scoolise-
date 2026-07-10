@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prepare — Tableau de bord | Scoolize</title>
-<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071002">
-<link rel="stylesheet" href="../assets/css/base.css?v=2026071002">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071003">
+<link rel="stylesheet" href="../assets/css/base.css?v=2026071003">
 <style>
   .hero-prepare { background: var(--prepare-100); padding: 3rem 0; border-bottom: 1px solid var(--border-1); }
   .stat-card strong { display:block; font-family: var(--font-heading); font-size: 2rem; color: var(--ink-900); }
@@ -28,14 +28,19 @@
       <a href="apercu.html">Aperçu candidat</a>
       <a href="publication.html">Publication</a>
     </nav>
-    <div class="topbar-actions">
-      <span class="badge badge-neutral">Camille Dupas · IUT de Bordeaux</span>
+    <div class="topbar-actions" style="gap:0.6rem;">
+      <span class="badge badge-neutral" id="staff-identity">—</span>
+      <button class="btn btn-secondary btn-sm" id="logout-btn">Déconnexion</button>
     </div>
   </div>
 </header>
 
 <section class="hero-prepare">
   <div class="container">
+    <div id="script-error" class="alert alert-danger mb-3" style="display:none;">
+      Le script <code>assets/js/api.js</code> n'a pas pu être chargé : cette page ne peut pas fonctionner.
+      Rechargez la page (Cmd/Ctrl + Maj + R) ou vérifiez qu'aucune extension de navigateur (bloqueur de scripts, antivirus) ne bloque les fichiers locaux.
+    </div>
     <span class="badge badge-info">Espace formation</span>
     <h1 class="mt-2">BUT Techniques de Commercialisation</h1>
     <p class="text-muted mb-0">Campagne 2027 · Statut : <span class="badge badge-warning">Brouillon — non publié</span></p>
@@ -89,6 +94,26 @@
   </div>
 </footer>
 
-<script src="../assets/js/prototype.js?v=2026071002"></script>
+<script src="../assets/js/api.js?v=2026071003" onerror="document.getElementById('script-error').style.display='block';"></script>
+<script src="../assets/js/prepare-guard.js?v=2026071003"></script>
+<script src="../assets/js/prototype.js?v=2026071003"></script>
+<script>
+(function () {
+  if (!window.ScoolizeAPI) {
+    document.getElementById('script-error').style.display = 'block';
+    return;
+  }
+  const { auth } = window.ScoolizeAPI;
+  const user = auth.getUser();
+  if (user) {
+    const school = user.school ? ` · ${user.school.name}` : '';
+    document.getElementById('staff-identity').textContent = `${user.firstName} ${user.lastName}${school}`;
+  }
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    auth.clearSession();
+    window.location.href = '../auth/prepare-login.html';
+  });
+})();
+</script>
 </body>
 </html>

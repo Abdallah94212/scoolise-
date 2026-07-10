@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion établissement — Prepare | Scoolize</title>
+<link rel="stylesheet" href="../assets/css/tokens.css?v=2026071003">
+<link rel="stylesheet" href="../assets/css/base.css?v=2026071003">
+<style>
+  .auth-wrap { max-width: 420px; margin: 4rem auto; }
+</style>
+</head>
+<body class="theme-prepare">
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark">S</span> Scoolize <span class="brand-sub">Prepare</span></a>
+  </div>
+</header>
+
+<main id="main" class="main">
+  <div class="container auth-wrap">
+    <div class="card section">
+      <span class="badge badge-info mb-2">Espace formation</span>
+      <h1>Connexion établissement</h1>
+      <p class="text-muted text-sm">Réservé au personnel des établissements (responsables admissions). Les candidats doivent utiliser <a href="login.html">l'espace Predict</a>.</p>
+
+      <div id="form-error" class="alert alert-danger mb-3" style="display:none;"></div>
+      <div id="script-error" class="alert alert-danger mb-3" style="display:none;">
+        Le script <code>assets/js/api.js</code> n'a pas pu être chargé : le formulaire ne peut pas fonctionner.
+        Rechargez la page (Cmd/Ctrl + Maj + R) ou vérifiez qu'aucune extension de navigateur (bloqueur de scripts, antivirus) ne bloque les fichiers locaux.
+      </div>
+
+      <form id="login-form" novalidate onsubmit="return false;">
+        <div class="field">
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Se connecter</button>
+      </form>
+
+      <p class="text-sm text-muted mt-3 mb-0">Compte de démonstration : <code>camille.dupas@iut-bordeaux.fr</code> / <code>Formation1234!</code> (IUT de Bordeaux).</p>
+      <p class="text-sm text-muted mb-0">Les comptes établissement sont créés par un administrateur, pas d'auto-inscription ici.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <span>Scoolize — Prepare</span>
+    <a href="../index.html">← Retour au portail</a>
+  </div>
+</footer>
+
+<script src="../assets/js/api.js?v=2026071003" onerror="document.getElementById('script-error').style.display='block';"></script>
+<script>
+(function () {
+  if (!window.ScoolizeAPI) {
+    document.getElementById('script-error').style.display = 'block';
+    throw new Error("assets/js/api.js n'a pas été chargé correctement — arrêt du script de la page.");
+  }
+  const { api, auth, ApiError } = window.ScoolizeAPI;
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorBox = document.getElementById('form-error');
+    errorBox.style.display = 'none';
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Connexion…';
+
+    try {
+      const { user, token } = await api.post('/auth/login', { email, password });
+      if (user.role !== 'SCHOOL_STAFF') {
+        errorBox.textContent = "Ce compte n'est pas un compte établissement. Utilisez la page de connexion appropriée.";
+        errorBox.style.display = 'block';
+        return;
+      }
+      auth.setSession(token, user);
+      window.location.href = '../prepare/index.html';
+    } catch (err) {
+      errorBox.textContent = err instanceof ApiError ? err.message : 'Une erreur inattendue est survenue.';
+      errorBox.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Se connecter';
+    }
+  });
+})();
+</script>
+</body>
+</html>

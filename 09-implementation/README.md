@@ -31,9 +31,22 @@ de commits).
 | 5 | Écran administrateur (utilisateurs, écoles, formations, stats, candidatures) | ✅ | `backend/src/modules/admin/` · frontend : `admin/*.html` |
 | 6 | Vœux côté frontend (routes, affichage, modification) | ✅ | `backend/src/modules/wishes/` · frontend : `predict/mes-voeux.html` |
 
-**97 tests automatisés** (Jest + Supertest), exécutés contre une vraie base PostgreSQL de
+**113 tests automatisés** (Jest + Supertest), exécutés contre une vraie base PostgreSQL de
 test (voir `backend/tests/`). Aucune fonctionnalité listée ci-dessus n'est simulée : chaque
 route est branchée à une vraie table, avec de vraies contraintes (unicité, clés étrangères).
+
+## Rôles applicatifs
+
+Trois rôles réels, chacun avec sa propre page de connexion :
+
+| Rôle | Connexion | Peut faire |
+|---|---|---|
+| `STUDENT` | `frontend/auth/login.html` | Rechercher des formations, gérer son profil et ses vœux (les siens uniquement). |
+| `SCHOOL_STAFF` | `frontend/auth/prepare-login.html` | Gérer les formations, statistiques et infos de **son propre établissement uniquement** (rattachement via `User.schoolId`) — ex. Camille Dupas ne peut pas modifier une formation d'une autre école (403 si elle essaie). Pas d'auto-inscription : le compte est créé/rattaché par un administrateur via `admin/utilisateurs.html`. |
+| `ADMIN` | `frontend/auth/login.html` | Tout gérer, sur tous les établissements (utilisateurs, écoles, formations, statistiques, candidatures). |
+
+Cette séparation est testée (`backend/tests/school-staff.test.js`) : création/modification/suppression
+refusée avec un code 403 dès qu'un `SCHOOL_STAFF` cible un établissement qui n'est pas le sien.
 
 ## Lancer le projet avec Docker (recommandé pour une démo)
 
@@ -57,6 +70,7 @@ de statistiques, un compte admin et un compte étudiant).
 |---|---|---|
 | Administrateur | `admin@scoolize.fr` | `Admin1234!` |
 | Étudiant (Léa Martin, INE `123456789AB`) | `lea.martin@lycee-demo.fr` | `Etudiant1234!` |
+| Personnel d'établissement — Prepare (Camille Dupas, IUT de Bordeaux) | `camille.dupas@iut-bordeaux.fr` | `Formation1234!` |
 
 ## Lancer le backend en local sans Docker
 
